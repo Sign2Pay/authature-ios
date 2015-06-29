@@ -15,9 +15,9 @@
 
     self = [super init];
     if (self) {
-        self.ClientId = clientId;
-        self.ClientSecret = clientSecret;
-        self.CallbackUrl = callbackUrl;
+        self.clientId = clientId;
+        self.clientSecret = clientSecret;
+        self.callbackUrl = callbackUrl;
     }
 
     return self;

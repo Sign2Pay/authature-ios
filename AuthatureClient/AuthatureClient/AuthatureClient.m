@@ -39,9 +39,9 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
                         delegate:(id<AuthatureDelegate>) delegate{
     self = [super init];
     if (self) {
-        self.Settings = settings;
-        self.User = user;
-        self.Delegate = delegate;
+        self.settings = settings;
+        self.user = user;
+        self.delegate = delegate;
     }
 
     return self;
@@ -50,7 +50,7 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
 - (void)startPreApproval{
     [self SetState];
 
-    UIViewController* hostController = [self.Delegate controllerForWebView];
+    UIViewController* hostController = [self.delegate controllerForWebView];
     UIWebView * webView = [[UIWebView alloc] initWithFrame:hostController.view.frame];
     webView.delegate = self;
     self.webViewController =  [[UIViewController alloc] init];
@@ -72,15 +72,15 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
     NSString * userFirstName = @"";
     NSString * userLastName = @"";
 
-    if(self.User != NULL){
-        userIdentifier = self.User.Identifier;
-        userFirstName = self.User.FirstName;
-        userLastName = self.User.LastName;
+    if(self.user != NULL){
+        userIdentifier = self.user.identifier;
+        userFirstName = self.user.firstName;
+        userLastName = self.user.lastName;
     }
 
-    NSString * urlString = [NSString stringWithFormat:AUTHATURE_URL,
-                    self.Settings.ClientId, //client_id
-                    self.Settings.CallbackUrl,    //redirect_url
+    NSString *urlString = [NSString stringWithFormat:AUTHATURE_URL,
+                    self.settings.clientId, //client_id
+                    self.settings.callbackUrl,    //redirect_url
                     self.state,   //state
                     @"device_uid",  //device_uid
                     @"preapproval", //scope
@@ -92,14 +92,14 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
 }
 
 -(void) loadGrantPage{
-    NSURLRequest * request = [NSURLRequest requestWithURL: [self buildAuthorizationRequestURL]];
-    [((UIWebView*)self.webViewController.view) loadRequest:request];
+    NSURLRequest *request = [NSURLRequest requestWithURL: [self buildAuthorizationRequestURL]];
+    [((UIWebView *)self.webViewController.view) loadRequest:request];
 }
 #pragma mark UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     NSLog(request.debugDescription);
-    if([[request.mainDocumentURL absoluteString] hasPrefix:self.Settings.CallbackUrl]){
-        [[self.Delegate controllerForWebView] dismissViewControllerAnimated:NO
+    if([[request.mainDocumentURL absoluteString] hasPrefix:self.settings.callbackUrl]){
+        [[self.delegate controllerForWebView] dismissViewControllerAnimated:NO
                                                                  completion:NULL];
         return NO;
     }

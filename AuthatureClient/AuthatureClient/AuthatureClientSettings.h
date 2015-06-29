@@ -7,9 +7,9 @@
 
 @interface AuthatureClientSettings : NSObject
 
-@property (strong, nonatomic) NSString * ClientId;
-@property (strong, nonatomic) NSString * ClientSecret;
-@property (strong, nonatomic) NSString * CallbackUrl;
+@property (strong, nonatomic) NSString *clientId;
+@property (strong, nonatomic) NSString *clientSecret;
+@property (strong, nonatomic) NSString *callbackUrl;
 
 - (instancetype)initWithClientId:(NSString *)clientId
                     clientSecret:(NSString *)clientSecret

@@ -15,9 +15,9 @@
 
 @interface AuthatureClient : NSObject
 
-@property (strong, nonatomic) AuthatureClientSettings * Settings;
-@property (strong, nonatomic) AuthatureUser* User;
-@property (strong, nonatomic) NSObject<AuthatureDelegate>* Delegate;
+@property (strong, nonatomic) AuthatureClientSettings *settings;
+@property (strong, nonatomic) AuthatureUser *user;
+@property (strong, nonatomic) NSObject<AuthatureDelegate> *delegate;
 
 - (instancetype)initWithSettings:(AuthatureClientSettings *)settings
                             user:(AuthatureUser *) user
