@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>1BBA4618-D348-4CB3-8E20-01C656E07FCD</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>AuthatureClient</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>74B7C8E2833C8D4972BE921C4A33ED7BFD65B386</key>
 		<string>https://github.com/Sign2Pay/authature-ios.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>AuthatureClient/AuthatureClient.xcodeproj/project.xcworkspace</string>
+	<string>AuthatureClient/AuthatureClient.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>74B7C8E2833C8D4972BE921C4A33ED7BFD65B386</key>

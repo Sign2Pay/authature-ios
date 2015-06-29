@@ -9,21 +9,11 @@
 /* Begin PBXBuildFile section */
 		36A80B091B41401700E2A854 /* AuthatureClient.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 36A80B081B41401700E2A854 /* AuthatureClient.h */; };
 		36A80B0B1B41401700E2A854 /* AuthatureClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A80B0A1B41401700E2A854 /* AuthatureClient.m */; };
-		36A80B111B41401700E2A854 /* libAuthatureClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36A80B051B41401700E2A854 /* libAuthatureClient.a */; };
 		36CFF6301B4149F800020F2C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CFF62F1B4149F800020F2C /* UIKit.framework */; };
 		C8C1A8CADA99DC2DE52BC864 /* AuthatureClientSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C1A2E738F59D47AC818414 /* AuthatureClientSettings.m */; };
 		C8C1AE07C82E26DC314F7ACA /* AuthatureUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C1A7662998369B0FBCB0A3 /* AuthatureUser.m */; };
+		D04ECBD947D5DD5C2AD97017 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B05FBB821204D03B543A816E /* libPods.a */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		36A80B121B41401700E2A854 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 36A80AFD1B41401700E2A854 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 36A80B041B41401700E2A854;
-			remoteInfo = AuthatureClient;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		36A80B031B41401700E2A854 /* CopyFiles */ = {
@@ -42,8 +32,10 @@
 		36A80B051B41401700E2A854 /* libAuthatureClient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAuthatureClient.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		36A80B081B41401700E2A854 /* AuthatureClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthatureClient.h; sourceTree = "<group>"; };
 		36A80B0A1B41401700E2A854 /* AuthatureClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AuthatureClient.m; sourceTree = "<group>"; };
-		36A80B101B41401700E2A854 /* AuthatureClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AuthatureClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		36CFF62F1B4149F800020F2C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		4B53A63476998ED2F12F9D9C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		5D4DEF5077E3EA6DB44A3E95 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		B05FBB821204D03B543A816E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8C1A2E738F59D47AC818414 /* AuthatureClientSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthatureClientSettings.m; sourceTree = "<group>"; };
 		C8C1A2F61478ADA3A182A70C /* AuthatureDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthatureDelegate.h; sourceTree = "<group>"; };
 		C8C1A7662998369B0FBCB0A3 /* AuthatureUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthatureUser.m; sourceTree = "<group>"; };
@@ -57,14 +49,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				36CFF6301B4149F800020F2C /* UIKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		36A80B0D1B41401700E2A854 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				36A80B111B41401700E2A854 /* libAuthatureClient.a in Frameworks */,
+				D04ECBD947D5DD5C2AD97017 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +62,8 @@
 				36CFF62F1B4149F800020F2C /* UIKit.framework */,
 				36A80B071B41401700E2A854 /* AuthatureClient */,
 				36A80B061B41401700E2A854 /* Products */,
+				C0F4B045733A1D4F1AE3BCD7 /* Pods */,
+				C7E3E6F6B31413C3600C3781 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -84,7 +71,6 @@
 			isa = PBXGroup;
 			children = (
 				36A80B051B41401700E2A854 /* libAuthatureClient.a */,
-				36A80B101B41401700E2A854 /* AuthatureClientTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -103,6 +89,23 @@
 			path = AuthatureClient;
 			sourceTree = "<group>";
 		};
+		C0F4B045733A1D4F1AE3BCD7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4B53A63476998ED2F12F9D9C /* Pods.debug.xcconfig */,
+				5D4DEF5077E3EA6DB44A3E95 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		C7E3E6F6B31413C3600C3781 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B05FBB821204D03B543A816E /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -110,9 +113,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 36A80B191B41401700E2A854 /* Build configuration list for PBXNativeTarget "AuthatureClient" */;
 			buildPhases = (
+				E0E1FC04BE3DB3B31D16BDFA /* Check Pods Manifest.lock */,
 				36A80B011B41401700E2A854 /* Sources */,
 				36A80B021B41401700E2A854 /* Frameworks */,
 				36A80B031B41401700E2A854 /* CopyFiles */,
+				5FEA366A72EA3C67F0E37531 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -122,24 +127,6 @@
 			productName = AuthatureClient;
 			productReference = 36A80B051B41401700E2A854 /* libAuthatureClient.a */;
 			productType = "com.apple.product-type.library.static";
-		};
-		36A80B0F1B41401700E2A854 /* AuthatureClientTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 36A80B1C1B41401700E2A854 /* Build configuration list for PBXNativeTarget "AuthatureClientTests" */;
-			buildPhases = (
-				36A80B0C1B41401700E2A854 /* Sources */,
-				36A80B0D1B41401700E2A854 /* Frameworks */,
-				36A80B0E1B41401700E2A854 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				36A80B131B41401700E2A854 /* PBXTargetDependency */,
-			);
-			name = AuthatureClientTests;
-			productName = AuthatureClientTests;
-			productReference = 36A80B101B41401700E2A854 /* AuthatureClientTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -151,9 +138,6 @@
 				ORGANIZATIONNAME = Sign2Pay;
 				TargetAttributes = {
 					36A80B041B41401700E2A854 = {
-						CreatedOnToolsVersion = 6.3.2;
-					};
-					36A80B0F1B41401700E2A854 = {
 						CreatedOnToolsVersion = 6.3.2;
 					};
 				};
@@ -171,20 +155,42 @@
 			projectRoot = "";
 			targets = (
 				36A80B041B41401700E2A854 /* AuthatureClient */,
-				36A80B0F1B41401700E2A854 /* AuthatureClientTests */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		36A80B0E1B41401700E2A854 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
+/* Begin PBXShellScriptBuildPhase section */
+		5FEA366A72EA3C67F0E37531 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
 			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
-/* End PBXResourcesBuildPhase section */
+		E0E1FC04BE3DB3B31D16BDFA /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		36A80B011B41401700E2A854 /* Sources */ = {
@@ -197,22 +203,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		36A80B0C1B41401700E2A854 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		36A80B131B41401700E2A854 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 36A80B041B41401700E2A854 /* AuthatureClient */;
-			targetProxy = 36A80B121B41401700E2A854 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		36A80B171B41401700E2A854 /* Debug */ = {
@@ -295,6 +286,7 @@
 		};
 		36A80B1A1B41401700E2A854 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B53A63476998ED2F12F9D9C /* Pods.debug.xcconfig */;
 			buildSettings = {
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "-ObjC";
@@ -305,43 +297,12 @@
 		};
 		36A80B1B1B41401700E2A854 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D4DEF5077E3EA6DB44A3E95 /* Pods.release.xcconfig */;
 			buildSettings = {
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		36A80B1D1B41401700E2A854 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = AuthatureClientTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		36A80B1E1B41401700E2A854 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = AuthatureClientTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -362,15 +323,6 @@
 			buildConfigurations = (
 				36A80B1A1B41401700E2A854 /* Debug */,
 				36A80B1B1B41401700E2A854 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		36A80B1C1B41401700E2A854 /* Build configuration list for PBXNativeTarget "AuthatureClientTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				36A80B1D1B41401700E2A854 /* Debug */,
-				36A80B1E1B41401700E2A854 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

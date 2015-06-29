@@ -65,7 +65,7 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
 }
 
 - (void)SetState {
-    self.State = [[NSUUID UUID] UUIDString];
+    self.state = [[NSUUID UUID] UUIDString];
 }
 
 -(NSURL *) buildAuthorizationRequestURL{
@@ -143,7 +143,7 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
     NSLog(@"Did finish loading");
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
-    NSLog(@"ERROR LOADING PAGE", error);
+    NSLog(@"ERROR LOADING PAGE");
 }
 
 @end
