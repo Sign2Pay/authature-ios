@@ -41,6 +41,7 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
     if (self) {
         self.settings = settings;
         self.user = user;
+        self.deviceUid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
         self.delegate = delegate;
     }
 
@@ -82,7 +83,7 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
                     self.settings.clientId, //client_id
                     self.settings.callbackUrl,    //redirect_url
                     self.state,   //state
-                    @"device_uid",  //device_uid
+                    self.deviceUid,  //device_uid
                     @"preapproval", //scope
                     userIdentifier, //user_params[identifier]
                     userFirstName,  //user_params[first_name]

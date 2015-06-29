@@ -17,6 +17,7 @@
 
 @property (strong, nonatomic) AuthatureClientSettings *settings;
 @property (strong, nonatomic) AuthatureUser *user;
+@property (strong, nonatomic) NSString *deviceUid;
 @property (strong, nonatomic) NSObject<AuthatureDelegate> *delegate;
 
 - (instancetype)initWithSettings:(AuthatureClientSettings *)settings
