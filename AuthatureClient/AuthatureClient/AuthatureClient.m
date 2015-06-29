@@ -80,28 +80,57 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
     }
 
     NSString *urlString = [NSString stringWithFormat:AUTHATURE_URL,
-                    self.settings.clientId, //client_id
-                    self.settings.callbackUrl,    //redirect_url
-                    self.state,   //state
-                    self.deviceUid,  //device_uid
+                    [self encodeParam:self.settings.clientId], //client_id
+                    [self encodeParam:self.settings.callbackUrl],    //redirect_url
+                    [self encodeParam:self.state],   //state
+                    [self encodeParam:self.deviceUid],  //device_uid
                     @"preapproval", //scope
-                    userIdentifier, //user_params[identifier]
-                    userFirstName,  //user_params[first_name]
-                    userLastName];  //user_params[last_name]
+                    [self encodeParam:userIdentifier], //user_params[identifier]
+                    [self encodeParam:userFirstName],  //user_params[first_name]
+                    [self encodeParam:userLastName]];  //user_params[last_name]
 
     return [NSURL URLWithString:urlString];
+}
+
+- (NSString *)encodeParam:(NSString *) parameter {
+    return [parameter stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
 }
 
 -(void) loadGrantPage{
     NSURLRequest *request = [NSURLRequest requestWithURL: [self buildAuthorizationRequestURL]];
     [((UIWebView *)self.webViewController.view) loadRequest:request];
 }
+
+-(NSDictionary *) parseStateAndCodeFromUrl:(NSString *)url{
+    NSString *state = [[url componentsSeparatedByString:@"state="][1]
+            componentsSeparatedByString:@"&"][0];
+    NSString *code = [[url componentsSeparatedByString:@"code="][1]
+            componentsSeparatedByString:@"&"][0];
+
+    return @{
+            @"state" : state,
+            @"code" : code
+    };
+}
+
+-(void) loadUserFromCallbackUrl:(NSString *) url{
+    //AFNetworking here
+}
+
 #pragma mark UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-    NSLog(request.debugDescription);
-    if([[request.mainDocumentURL absoluteString] hasPrefix:self.settings.callbackUrl]){
+
+    NSString *url = [request.mainDocumentURL absoluteString];
+    NSLog(url);
+
+    if([url hasPrefix:self.settings.callbackUrl]){
         [[self.delegate controllerForWebView] dismissViewControllerAnimated:NO
                                                                  completion:NULL];
+        NSDictionary *stateAndCode = [self parseStateAndCodeFromUrl:url];
+        if([stateAndCode[@"state"] isEqualToString:self.state]){
+            [self loadUserFromCallbackUrl:url];
+        }
+
         return NO;
     }
     return YES;
