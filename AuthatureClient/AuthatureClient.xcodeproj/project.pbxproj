@@ -1,0 +1,379 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		36A80B091B41401700E2A854 /* AuthatureClient.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 36A80B081B41401700E2A854 /* AuthatureClient.h */; };
+		36A80B0B1B41401700E2A854 /* AuthatureClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A80B0A1B41401700E2A854 /* AuthatureClient.m */; };
+		36A80B111B41401700E2A854 /* libAuthatureClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36A80B051B41401700E2A854 /* libAuthatureClient.a */; };
+		36CFF6301B4149F800020F2C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CFF62F1B4149F800020F2C /* UIKit.framework */; };
+		C8C1A8CADA99DC2DE52BC864 /* AuthatureClientSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C1A2E738F59D47AC818414 /* AuthatureClientSettings.m */; };
+		C8C1AE07C82E26DC314F7ACA /* AuthatureUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C1A7662998369B0FBCB0A3 /* AuthatureUser.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		36A80B121B41401700E2A854 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 36A80AFD1B41401700E2A854 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 36A80B041B41401700E2A854;
+			remoteInfo = AuthatureClient;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		36A80B031B41401700E2A854 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				36A80B091B41401700E2A854 /* AuthatureClient.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		36A80B051B41401700E2A854 /* libAuthatureClient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAuthatureClient.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		36A80B081B41401700E2A854 /* AuthatureClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthatureClient.h; sourceTree = "<group>"; };
+		36A80B0A1B41401700E2A854 /* AuthatureClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AuthatureClient.m; sourceTree = "<group>"; };
+		36A80B101B41401700E2A854 /* AuthatureClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AuthatureClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		36CFF62F1B4149F800020F2C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C8C1A2E738F59D47AC818414 /* AuthatureClientSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthatureClientSettings.m; sourceTree = "<group>"; };
+		C8C1A2F61478ADA3A182A70C /* AuthatureDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthatureDelegate.h; sourceTree = "<group>"; };
+		C8C1A7662998369B0FBCB0A3 /* AuthatureUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthatureUser.m; sourceTree = "<group>"; };
+		C8C1A7D9C8E7EA3F6388F4E6 /* AuthatureClientSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthatureClientSettings.h; sourceTree = "<group>"; };
+		C8C1ADCF453D24DECD53DEAD /* AuthatureUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthatureUser.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		36A80B021B41401700E2A854 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36CFF6301B4149F800020F2C /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		36A80B0D1B41401700E2A854 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36A80B111B41401700E2A854 /* libAuthatureClient.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		36A80AFC1B41401700E2A854 = {
+			isa = PBXGroup;
+			children = (
+				36CFF62F1B4149F800020F2C /* UIKit.framework */,
+				36A80B071B41401700E2A854 /* AuthatureClient */,
+				36A80B061B41401700E2A854 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		36A80B061B41401700E2A854 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				36A80B051B41401700E2A854 /* libAuthatureClient.a */,
+				36A80B101B41401700E2A854 /* AuthatureClientTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		36A80B071B41401700E2A854 /* AuthatureClient */ = {
+			isa = PBXGroup;
+			children = (
+				36A80B081B41401700E2A854 /* AuthatureClient.h */,
+				36A80B0A1B41401700E2A854 /* AuthatureClient.m */,
+				C8C1A2E738F59D47AC818414 /* AuthatureClientSettings.m */,
+				C8C1A7D9C8E7EA3F6388F4E6 /* AuthatureClientSettings.h */,
+				C8C1A2F61478ADA3A182A70C /* AuthatureDelegate.h */,
+				C8C1A7662998369B0FBCB0A3 /* AuthatureUser.m */,
+				C8C1ADCF453D24DECD53DEAD /* AuthatureUser.h */,
+			);
+			path = AuthatureClient;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		36A80B041B41401700E2A854 /* AuthatureClient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 36A80B191B41401700E2A854 /* Build configuration list for PBXNativeTarget "AuthatureClient" */;
+			buildPhases = (
+				36A80B011B41401700E2A854 /* Sources */,
+				36A80B021B41401700E2A854 /* Frameworks */,
+				36A80B031B41401700E2A854 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AuthatureClient;
+			productName = AuthatureClient;
+			productReference = 36A80B051B41401700E2A854 /* libAuthatureClient.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		36A80B0F1B41401700E2A854 /* AuthatureClientTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 36A80B1C1B41401700E2A854 /* Build configuration list for PBXNativeTarget "AuthatureClientTests" */;
+			buildPhases = (
+				36A80B0C1B41401700E2A854 /* Sources */,
+				36A80B0D1B41401700E2A854 /* Frameworks */,
+				36A80B0E1B41401700E2A854 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				36A80B131B41401700E2A854 /* PBXTargetDependency */,
+			);
+			name = AuthatureClientTests;
+			productName = AuthatureClientTests;
+			productReference = 36A80B101B41401700E2A854 /* AuthatureClientTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		36A80AFD1B41401700E2A854 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = Sign2Pay;
+				TargetAttributes = {
+					36A80B041B41401700E2A854 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+					36A80B0F1B41401700E2A854 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+				};
+			};
+			buildConfigurationList = 36A80B001B41401700E2A854 /* Build configuration list for PBXProject "AuthatureClient" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 36A80AFC1B41401700E2A854;
+			productRefGroup = 36A80B061B41401700E2A854 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				36A80B041B41401700E2A854 /* AuthatureClient */,
+				36A80B0F1B41401700E2A854 /* AuthatureClientTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		36A80B0E1B41401700E2A854 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		36A80B011B41401700E2A854 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36A80B0B1B41401700E2A854 /* AuthatureClient.m in Sources */,
+				C8C1A8CADA99DC2DE52BC864 /* AuthatureClientSettings.m in Sources */,
+				C8C1AE07C82E26DC314F7ACA /* AuthatureUser.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		36A80B0C1B41401700E2A854 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		36A80B131B41401700E2A854 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 36A80B041B41401700E2A854 /* AuthatureClient */;
+			targetProxy = 36A80B121B41401700E2A854 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		36A80B171B41401700E2A854 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		36A80B181B41401700E2A854 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		36A80B1A1B41401700E2A854 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		36A80B1B1B41401700E2A854 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		36A80B1D1B41401700E2A854 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = AuthatureClientTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		36A80B1E1B41401700E2A854 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = AuthatureClientTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		36A80B001B41401700E2A854 /* Build configuration list for PBXProject "AuthatureClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				36A80B171B41401700E2A854 /* Debug */,
+				36A80B181B41401700E2A854 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		36A80B191B41401700E2A854 /* Build configuration list for PBXNativeTarget "AuthatureClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				36A80B1A1B41401700E2A854 /* Debug */,
+				36A80B1B1B41401700E2A854 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		36A80B1C1B41401700E2A854 /* Build configuration list for PBXNativeTarget "AuthatureClientTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				36A80B1D1B41401700E2A854 /* Debug */,
+				36A80B1E1B41401700E2A854 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 36A80AFD1B41401700E2A854 /* Project object */;
+}
