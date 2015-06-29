@@ -25,8 +25,12 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
                             "user_params[last_name]=%@";
 
 @interface AuthatureClient()<UIWebViewDelegate>
+
 @property (strong, nonatomic) UIViewController *webViewController;
+@property (strong, nonatomic) NSString * state;
+
 -(void) loadGrantPage;
+
 @end
 
 @implementation AuthatureClient
@@ -44,11 +48,11 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
 }
 
 - (void)startPreApproval{
+    [self SetState];
 
     UIViewController* hostController = [self.Delegate controllerForWebView];
     UIWebView * webView = [[UIWebView alloc] initWithFrame:hostController.view.frame];
     webView.delegate = self;
-
     self.webViewController =  [[UIViewController alloc] init];
     self.webViewController.view = webView;
 
@@ -59,8 +63,11 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
                                }];
 }
 
+- (void)SetState {
+    self.State = [[NSUUID UUID] UUIDString];
+}
+
 -(NSURL *) buildAuthorizationRequestURL{
-    NSString * redirectURI = @"http://authature.com/oauth/callback";
     NSString * userIdentifier = @"";
     NSString * userFirstName = @"";
     NSString * userLastName = @"";
@@ -74,7 +81,7 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
     NSString * urlString = [NSString stringWithFormat:AUTHATURE_URL,
                     self.Settings.ClientId, //client_id
                     self.Settings.CallbackUrl,    //redirect_url
-                    @"somestate",   //state
+                    self.state,   //state
                     @"device_uid",  //device_uid
                     @"preapproval", //scope
                     userIdentifier, //user_params[identifier]
