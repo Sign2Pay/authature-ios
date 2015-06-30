@@ -5,6 +5,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIViewController.h>
+#import <UIKit/UIWebView.h>
 
 @protocol AuthatureDelegate <NSObject>
 

@@ -11,6 +11,11 @@
 #import "AuthatureUser.h"
 #import <UIKit/UIKit.h>
 
+
+FOUNDATION_EXPORT NSString *const AUTHATURE_SCOPE_PREAPPROVAL;
+FOUNDATION_EXPORT NSString *const AUTHATURE_SCOPE_AUTHENTICATE;
+FOUNDATION_EXPORT NSString *const AUTHATURE_SCOPE_SIGNATURE_CAPTURE;
+
 @class AuthatureClientSettings;
 
 @interface AuthatureClient : NSObject
@@ -24,5 +29,12 @@
                             user:(AuthatureUser *) user
                         delegate:(NSObject<AuthatureDelegate>*) delegate;
 
-- (void)startPreApproval;
+- (void)startGetTokenForPreApproval;
+
+- (void)startGetTokenForAuthentication;
+
+- (void)startGetTokenForSignatureCapture;
+
+- (void)startGetTokenForScope:(NSString *)scope;
+
 @end

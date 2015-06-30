@@ -12,10 +12,13 @@
 #import "AFHTTPRequestOperationManager.h"
 #import "AuthatureAccessTokenStorage.h"
 
+NSString *const AUTHATURE_SCOPE_PREAPPROVAL = @"preapproval";
+NSString *const AUTHATURE_SCOPE_AUTHENTICATE = @"authenticate";
+NSString *const AUTHATURE_SCOPE_SIGNATURE_CAPTURE = @"capture";
 
 //https://app.sign2pay.com/oauth/authorize?authature_site=app.sign2pay.com&client_id=c509fd593742b6b08adf4f0b41a4801c&response_type=code&redirect_uri=http%3A%2F%2Fauthature.com%2Foauth%2Fcallback&state=a7960190e546361df673d4a40d2d5e97c85b11e719481e2da3b19dcf47282154&device_uid=0c9468e589955074a457cca400c14fa3a6bbe077f39a5584dc3902e187b7f9fd&scope=preapproval&user_params%5Bidentifier%5D=mark.meeus%40gmail.com&user_params%5Bfirst_name%5D=Mark&user_params%5Blast_name%5D=Meeus
 //NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_site=app.sign2pay.com&client_id=c509fd593742b6b08adf4f0b41a4801c&response_type=code&redirect_uri=http%3A%2F%2Fauthature.com%2Foauth%2Fcallback&state=a7960190e546361df673d4a40d2d5e97c85b11e719481e2da3b19dcf47282154&device_uid=0c9468e589955074a457cca400c14fa3a6bbe077f39a5584dc3902e187b7f9fd&scope=preapproval&user_params%5Bidentifier%5D=mark.meeus%40gmail.com&user_params%5Bfirst_name%5D=Mark&user_params%5Blast_name%5D=Meeus";
-NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_site=app.sign2pay.com&"
+NSString *AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_site=app.sign2pay.com&"
                             "response_type=code&"
                             "client_id=%@&"
                             "redirect_uri=%@"
@@ -31,8 +34,6 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
 @property (strong, nonatomic) UIViewController *webViewController;
 @property (strong, nonatomic) UIWebView *webView;
 @property (strong, nonatomic) NSString * state;
-
--(void) loadGrantPage;
 
 @end
 
@@ -51,18 +52,30 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
     return self;
 }
 
-- (void)startPreApproval{
+- (void)startGetTokenForSignatureCapture{
+    [self startGetTokenForScope:AUTHATURE_SCOPE_SIGNATURE_CAPTURE];
+}
+
+- (void)startGetTokenForAuthentication{
+    [self startGetTokenForScope:AUTHATURE_SCOPE_AUTHENTICATE];
+}
+
+- (void)startGetTokenForPreApproval{
+    [self startGetTokenForScope:AUTHATURE_SCOPE_PREAPPROVAL];
+}
+
+- (void)startGetTokenForScope:(NSString *)scope{
 
     [self SetState];
 
-    [self presentWebView];
+    [self presentWebViewForScope:scope];
 }
 
 - (void)SetState {
     self.state = [[NSUUID UUID] UUIDString];
 }
 
--(NSURL *) buildAuthorizationRequestURL{
+-(NSURL *) buildAuthorizationRequestURL:(NSString *)scopes{
     NSString * userIdentifier = @"";
     NSString * userFirstName = @"";
     NSString * userLastName = @"";
@@ -85,7 +98,7 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
                     [self encodeParam:self.settings.callbackUrl],    //redirect_url
                     [self encodeParam:self.state],   //state
                     [self encodeParam:self.deviceUid],  //device_uid
-                    @"preapproval", //scope
+                    scopes,
                     [self encodeParam:userIdentifier], //user_params[identifier]
                     [self encodeParam:userFirstName],  //user_params[first_name]
                     [self encodeParam:userLastName]];  //user_params[last_name]
@@ -97,12 +110,12 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
     return [parameter stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
 }
 
--(void) loadGrantPage{
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: [self buildAuthorizationRequestURL]];
+-(void) loadGrantPageWithScope:(NSString *)scope{
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: [self buildAuthorizationRequestURL:scope]];
     [self.webView loadRequest:request];
 }
 
--(NSDictionary *) getStateFromUrl:(NSString *)url{
+-(NSString *) getStateFromUrl:(NSString *)url{
     return [[url componentsSeparatedByString:@"state="][1]
             componentsSeparatedByString:@"&"][0];
 }
@@ -148,10 +161,10 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
 }
 
 #pragma mark webViewManagement
-- (void)presentWebView{
+- (void)presentWebViewForScope:(NSString *)scope{
 
     void(^onWebViewPresented)(void) = ^void() {
-        [self loadGrantPage];
+        [self loadGrantPageWithScope:scope];
     };
 
     self.webView = [[UIWebView alloc] initWithFrame:[UIScreen mainScreen].bounds];
