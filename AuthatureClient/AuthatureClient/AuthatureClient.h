@@ -9,14 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "AuthatureDelegate.h"
 #import "AuthatureUser.h"
+#import "AuthatureClientSettings.h"
 #import <UIKit/UIKit.h>
 
 
-FOUNDATION_EXPORT NSString *const AUTHATURE_SCOPE_PREAPPROVAL;
+FOUNDATION_EXPORT NSString *const AUTHATURE_SCOPE_PRE_APPROVAL;
 FOUNDATION_EXPORT NSString *const AUTHATURE_SCOPE_AUTHENTICATE;
 FOUNDATION_EXPORT NSString *const AUTHATURE_SCOPE_SIGNATURE_CAPTURE;
 
-@class AuthatureClientSettings;
 
 @interface AuthatureClient : NSObject
 
@@ -24,6 +24,7 @@ FOUNDATION_EXPORT NSString *const AUTHATURE_SCOPE_SIGNATURE_CAPTURE;
 @property (strong, nonatomic) AuthatureUser *user;
 @property (strong, nonatomic) NSString *deviceUid;
 @property (strong, nonatomic) NSObject<AuthatureDelegate> *delegate;
+@property (nonatomic) BOOL automaticTokenStorageEnabled;
 
 - (instancetype)initWithSettings:(AuthatureClientSettings *)settings
                             user:(AuthatureUser *) user

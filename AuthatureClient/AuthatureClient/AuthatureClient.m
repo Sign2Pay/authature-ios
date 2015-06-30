@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "AuthatureClient.h"
-#import "AuthatureClientSettings.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "AuthatureAccessTokenStorage.h"
 
-NSString *const AUTHATURE_SCOPE_PREAPPROVAL = @"preapproval";
+NSString *const AUTHATURE_SCOPE_PRE_APPROVAL = @"preapproval";
 NSString *const AUTHATURE_SCOPE_AUTHENTICATE = @"authenticate";
 NSString *const AUTHATURE_SCOPE_SIGNATURE_CAPTURE = @"capture";
 
@@ -61,7 +60,7 @@ NSString *AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_s
 }
 
 - (void)startGetTokenForPreApproval{
-    [self startGetTokenForScope:AUTHATURE_SCOPE_PREAPPROVAL];
+    [self startGetTokenForScope:AUTHATURE_SCOPE_PRE_APPROVAL];
 }
 
 - (void)startGetTokenForScope:(NSString *)scope{
@@ -84,8 +83,8 @@ NSString *AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_s
         userIdentifier = self.user.identifier;
         userFirstName = self.user.firstName;
         userLastName = self.user.lastName;
-    }else{
-        NSDictionary *accessToken = [AuthatureAccessTokenStorage getAccessTokenForClientId:self.settings.clientId];
+    }else if(self.automaticTokenStorageEnabled){
+        NSDictionary *accessToken = [AuthatureAccessTokenStorage getAccessTokenForClientId:self.settings.clientId andKey:scopes];
         if(accessToken != NULL){
             userIdentifier = accessToken[@"user"][@"identifier"];
             userFirstName = accessToken[@"user"][@"first_name"];
@@ -140,9 +139,11 @@ NSString *AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_s
 }
 
 - (void)processAccessToken:(NSDictionary* )accessToken {
-
-    [AuthatureAccessTokenStorage saveAccessTokenForClientId:accessToken
-                                                forClientId:self.settings.clientId];
+    if(self.automaticTokenStorageEnabled){
+        [AuthatureAccessTokenStorage saveAccessToken:accessToken
+                                         forClientId:self.settings.clientId
+                                             withKey:accessToken[@"scopes"]];
+    }
     if([self.delegate respondsToSelector:@selector(authatureAccessTokenReceived:)]){
         [self.delegate authatureAccessTokenReceived:accessToken];
     }

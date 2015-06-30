@@ -7,6 +7,6 @@
 
 
 @interface AuthatureAccessTokenStorage : NSObject
-+ (NSDictionary *) getAccessTokenForClientId:(NSString *) clientId;
-+ (void) saveAccessTokenForClientId:(NSDictionary*) accessToken forClientId:(NSString *) clientId;
++ (NSDictionary *) getAccessTokenForClientId:(NSString *) clientId andKey:(NSString *)key;
++ (void) saveAccessToken:(NSDictionary*) accessToken forClientId:(NSString *) clientId withKey:(NSString *)key;
 @end

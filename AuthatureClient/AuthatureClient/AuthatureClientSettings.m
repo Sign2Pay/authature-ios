@@ -10,13 +10,11 @@
 
 }
 - (instancetype)initWithClientId:(NSString *)clientId
-                    clientSecret:(NSString *)clientSecret
                      callbackUrl:(NSString *)callbackUrl{
 
     self = [super init];
     if (self) {
         self.clientId = clientId;
-        self.clientSecret = clientSecret;
         self.callbackUrl = callbackUrl;
     }
 
