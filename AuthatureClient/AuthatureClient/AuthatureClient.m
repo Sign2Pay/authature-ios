@@ -102,7 +102,7 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager.requestSerializer setValue:@"Authature iOS SDK v0.0.1" forHTTPHeaderField:@"User-Agent"];
     [manager.requestSerializer setValue:[self bearerHeaderForToken:token] forHTTPHeaderField:@"Authorization"];
-    
+
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         if([((NSString *) responseObject[@"status"]) isEqualToString:@"ok"]){
             callback(TRUE, responseObject);
