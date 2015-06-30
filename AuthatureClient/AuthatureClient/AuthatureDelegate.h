@@ -11,11 +11,11 @@
 @optional
 - (UIViewController *) controllerForAuthatureWebView;
 
-- (void) presentAuthatureWebView:(UIWebView *) webiew completion:(void (^)(void))completion;
+- (void) presentAuthatureWebView:(UIWebView *) webView completion:(void (^)(void))completion;
 
 - (void) dismissAuthatureWebView;
 
-- (void) authatureUserInfoReceived:(NSDictionary *) userInfo;
+- (void) authatureAccessTokenReceived:(NSDictionary *) accessToken;
 
 - (void) processAuthatureErrorCode:(NSString *) errorCode withDescription:(NSString *) description;
 @end

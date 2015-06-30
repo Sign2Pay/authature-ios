@@ -10,6 +10,7 @@
 #import "AuthatureClient.h"
 #import "AuthatureClientSettings.h"
 #import "AFHTTPRequestOperationManager.h"
+#import "AuthatureAccessTokenStorage.h"
 
 
 //https://app.sign2pay.com/oauth/authorize?authature_site=app.sign2pay.com&client_id=c509fd593742b6b08adf4f0b41a4801c&response_type=code&redirect_uri=http%3A%2F%2Fauthature.com%2Foauth%2Fcallback&state=a7960190e546361df673d4a40d2d5e97c85b11e719481e2da3b19dcf47282154&device_uid=0c9468e589955074a457cca400c14fa3a6bbe077f39a5584dc3902e187b7f9fd&scope=preapproval&user_params%5Bidentifier%5D=mark.meeus%40gmail.com&user_params%5Bfirst_name%5D=Mark&user_params%5Blast_name%5D=Meeus
@@ -70,6 +71,13 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
         userIdentifier = self.user.identifier;
         userFirstName = self.user.firstName;
         userLastName = self.user.lastName;
+    }else{
+        NSDictionary *accessToken = [AuthatureAccessTokenStorage getAccessTokenForClientId:self.settings.clientId];
+        if(accessToken != NULL){
+            userIdentifier = accessToken[@"user"][@"identifier"];
+            userFirstName = accessToken[@"user"][@"first_name"];
+            userLastName = accessToken[@"user"][@"last_name"];
+        }
     }
 
     NSString *urlString = [NSString stringWithFormat:AUTHATURE_URL,
@@ -110,14 +118,21 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
             [self processAuthatureErrorCode:responseObject[@"error_code"]
                             withDescription:responseObject[@"error_desription"]];
         }else{
-            if([self.delegate respondsToSelector:@selector(authatureUserInfoReceived:)]){
-                [self.delegate authatureUserInfoReceived:responseObject[@"access_token"]];
-            }
+            [self processAccessToken:responseObject[@"access_token"]];
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self processCallbackError:error];
     }];
+}
+
+- (void)processAccessToken:(NSDictionary* )accessToken {
+
+    [AuthatureAccessTokenStorage saveAccessTokenForClientId:accessToken
+                                                forClientId:self.settings.clientId];
+    if([self.delegate respondsToSelector:@selector(authatureAccessTokenReceived:)]){
+        [self.delegate authatureAccessTokenReceived:accessToken];
+    }
 }
 
 - (void) processCallbackError:(NSError *) error{
