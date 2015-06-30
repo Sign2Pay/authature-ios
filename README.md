@@ -1,6 +1,6 @@
 # authature-ios
 
-The Autathure iOS SDK is designed to facilitate the integration Authature within your iOS apps.
+The Authature iOS SDK is designed to facilitate the integration Authature within your iOS apps.
 
 
 The SDK supplies integration points at different levels of abstraction.
@@ -16,15 +16,15 @@ The UI level sdk gives you less flexibilitiy but makes it dead simple to integre
 First create an instance of AuthatureClientSettings to hold your client details:
 
 ```objective-c
-[[AuthatureClientSettings alloc]
-            initWithClientId:@"your-client-id"
-         callbackUrl:@"your-servers-oauth-callback-url"];
+[[AuthatureClientSettings alloc] initWithClientId:@"your-client-id"
+                                      callbackUrl:@"your-servers-oauth-callback-url"];
 ```
 
 With this settings object, you can instantiate an AuthatureClient. A delegate is also needed, see below for further details.
 
 ```objective-c
-[[AuthatureClient alloc] initWithSettings:_clientSettings 								  delegate:authatureDelegate];
+[[AuthatureClient alloc] initWithSettings:clientSettings
+                                 delegate:authatureDelegate];
 ```
  
 ### Starting an Authature flow
@@ -34,22 +34,22 @@ You can start the flow for any of these scopes by calling the corresponding meth
 
 Capture (to capture the signature)
 ```objective-c
-[self.AuthatureClient  startGetTokenForSignatureCapture]
+[authatureClient  startGetTokenForSignatureCapture]
 ```
 
 Authenticate (to authenticate the user)
 ```objective-c
-[self.AuthatureClient  startGetTokenForAuthentication]
+[authatureClient  startGetTokenForAuthentication]
 ```
 
 PreApprove (to preapprove payments) 
 ```objective-c
-[self.AuthatureClient  startGetTokenForPreApproval]
+[authatureClient  startGetTokenForPreApproval]
 ```
 
 If you want a combination of scopes you can call the more generic method:
 ```objective-c
-[self.AuthatureClient  startGetTokenForScope:@"authenticate,capture"]
+[authatureClient  startGetTokenForScope:@"authenticate,capture"]
 ```
 
 ### The delegate
@@ -83,18 +83,19 @@ When the the flow resulted in a token:
 When the flow resulted in an error:
 
 ```objective-c
-- (void) processAuthatureErrorCode:(NSString *) errorCode withDescription:(NSString *) description;
+- (void) processAuthatureErrorCode:(NSString *) 
+         errorCode withDescription:(NSString *) description;
 ```
  
 ###Token verification
-You can use the AutahtureClient instance to verify if a token is (still) valid for a certain scope.
+You can use the AuthatureClient instance to verify if a token is (still) valid for a certain scope.
 You can do so by calling:
 
 ```objective-c
-[self.AuthatureClient verifyValidity:token
-				            forScope:AUTHATURE_SCOPE_PRE_APPROVAL
-                            callBack:^(BOOL valid, NSDictionary *dictionary) {} 
-                       errorCallBack:^(NSError *error) {}];
+[authatureClient verifyValidity:token
+                      forScope:AUTHATURE_SCOPE_PRE_APPROVAL
+                      callBack:^(BOOL valid, NSDictionary *dictionary) {} 
+                 errorCallBack:^(NSError *error) {}];
 ```
  
 ###Token storage
@@ -117,4 +118,4 @@ Likewise, you you want to validate a stored token for it's scope
 [authatureClient verifyStoredTokenValidityforScope:AUTHATURE_SCOPE_PRE_APPROVAL
                                           callBack:^(BOOL valid, NSDictionary *dictionary) {}   
                                      errorCallBack:^(NSError *error) {}];
-`` 
+```
