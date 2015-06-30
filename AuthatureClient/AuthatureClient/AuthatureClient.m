@@ -17,16 +17,23 @@ NSString *const AUTHATURE_SCOPE_SIGNATURE_CAPTURE = @"capture";
 
 //https://app.sign2pay.com/oauth/authorize?authature_site=app.sign2pay.com&client_id=c509fd593742b6b08adf4f0b41a4801c&response_type=code&redirect_uri=http%3A%2F%2Fauthature.com%2Foauth%2Fcallback&state=a7960190e546361df673d4a40d2d5e97c85b11e719481e2da3b19dcf47282154&device_uid=0c9468e589955074a457cca400c14fa3a6bbe077f39a5584dc3902e187b7f9fd&scope=preapproval&user_params%5Bidentifier%5D=mark.meeus%40gmail.com&user_params%5Bfirst_name%5D=Mark&user_params%5Blast_name%5D=Meeus
 //NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_site=app.sign2pay.com&client_id=c509fd593742b6b08adf4f0b41a4801c&response_type=code&redirect_uri=http%3A%2F%2Fauthature.com%2Foauth%2Fcallback&state=a7960190e546361df673d4a40d2d5e97c85b11e719481e2da3b19dcf47282154&device_uid=0c9468e589955074a457cca400c14fa3a6bbe077f39a5584dc3902e187b7f9fd&scope=preapproval&user_params%5Bidentifier%5D=mark.meeus%40gmail.com&user_params%5Bfirst_name%5D=Mark&user_params%5Blast_name%5D=Meeus";
-NSString *AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_site=app.sign2pay.com&"
-                            "response_type=code&"
-                            "client_id=%@&"
-                            "redirect_uri=%@"
+NSString *AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?"
+                            "?authature_site=app.sign2pay.com"
+                            "&response_type=code"
+                            "&client_id=%@"
+                            "&redirect_uri=%@"
                             "&state=%@"
-                            "&device_uid=%@&"
-                            "scope=%@&" //preapproval
-                            "user_params[identifier]=%@&" //email
-                            "user_params[first_name]=%@&"
-                            "user_params[last_name]=%@";
+                            "&device_uid=%@"
+                            "&scope=%@" //preapproval
+                            "&user_params[identifier]=%@" //email
+                            "&user_params[first_name]=%@"
+                            "&user_params[last_name]=%@";
+
+NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
+                            "client_id=%@&"
+                            "scope=%@&"
+                            "device_uid=%@";
+
 
 @interface AuthatureClient()<UIWebViewDelegate>
 
@@ -70,11 +77,63 @@ NSString *AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_s
     [self presentWebViewForScope:scope];
 }
 
+- (void)verifyStoredTokenValidityforScope:(NSString *)scope
+                                 callBack:(void (^)(BOOL, NSDictionary *))callback
+                            errorCallBack:(void (^)(NSError *)) errorCallback{
+    NSDictionary *accessToken = [self getStoredTokenForScope:scope];
+    if(accessToken != NULL) {
+        [self verifyTokenValidity:accessToken
+                         forScope:scope
+                         callBack:callback
+                    errorCallBack:errorCallback];
+    }else{
+        callback(FALSE, NULL);
+    }
+}
+
+- (void)verifyTokenValidity:(NSDictionary *)token
+                   forScope:(NSString *)scope
+                   callBack:(void (^)(BOOL, NSDictionary *))callback
+              errorCallBack:(void (^)(NSError *)) errorCallback  {
+
+    NSString *url = [self buildVerifyTokenUrlForScope:scope];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:@"Authature iOS SDK v0.0.1" forHTTPHeaderField:@"User-Agent"];
+    [manager.requestSerializer setValue:[self bearerHeaderForToken:token] forHTTPHeaderField:@"Authorization"];
+    
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+        if([((NSString *) responseObject[@"status"]) isEqualToString:@"ok"]){
+            callback(TRUE, responseObject);
+        }else{
+            callback(FALSE, responseObject);
+        }
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if(errorCallback != NULL){
+            errorCallback(error);
+        }
+    }];
+}
+
+- (NSString *)bearerHeaderForToken:(NSDictionary *)token{
+    return [NSString stringWithFormat:@"Bearer: %@", token[@"token"]];
+}
+
+- (NSString *)buildVerifyTokenUrlForScope:(NSString *)scope {
+    return [NSString stringWithFormat:VERIFY_TOKEN_URL,
+            [self encodeParam:self.settings.clientId],
+            scope,
+            [self encodeParam: self.deviceUid]
+        ];
+}
+
 - (void)SetState {
     self.state = [[NSUUID UUID] UUIDString];
 }
 
--(NSURL *) buildAuthorizationRequestURL:(NSString *)scopes{
+-(NSURL *) buildAuthorizationRequestURL:(NSString *)scope{
     NSString * userIdentifier = @"";
     NSString * userFirstName = @"";
     NSString * userLastName = @"";
@@ -84,7 +143,7 @@ NSString *AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_s
         userFirstName = self.user.firstName;
         userLastName = self.user.lastName;
     }else if(self.automaticTokenStorageEnabled){
-        NSDictionary *accessToken = [AuthatureAccessTokenStorage getAccessTokenForClientId:self.settings.clientId andKey:scopes];
+        NSDictionary *accessToken = [self getStoredTokenForScope:scope];
         if(accessToken != NULL){
             userIdentifier = accessToken[@"user"][@"identifier"];
             userFirstName = accessToken[@"user"][@"first_name"];
@@ -97,12 +156,16 @@ NSString *AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_s
                     [self encodeParam:self.settings.callbackUrl],    //redirect_url
                     [self encodeParam:self.state],   //state
                     [self encodeParam:self.deviceUid],  //device_uid
-                    scopes,
+                    scope,
                     [self encodeParam:userIdentifier], //user_params[identifier]
                     [self encodeParam:userFirstName],  //user_params[first_name]
                     [self encodeParam:userLastName]];  //user_params[last_name]
 
     return [NSURL URLWithString:urlString];
+}
+
+- (NSDictionary *)getStoredTokenForScope:(NSString *)scope {
+    return [AuthatureAccessTokenStorage getAccessTokenForClientId:self.settings.clientId andKey:scope];
 }
 
 - (NSString *)encodeParam:(NSString *) parameter {
@@ -123,14 +186,16 @@ NSString *AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_s
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager.requestSerializer setValue:@"Authature iOS SDK v0.0.1" forHTTPHeaderField:@"UserAgent"];
+    [manager.requestSerializer setValue:@"Authature iOS SDK v0.0.1" forHTTPHeaderField:@"User-Agent"];
 
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         if(responseObject[@"error_code"]){
             [self processAuthatureErrorCode:responseObject[@"error_code"]
                             withDescription:responseObject[@"error_desription"]];
+            [self dismissWebView];
         }else{
             [self processAccessToken:responseObject[@"access_token"]];
+            [self dismissWebView];
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -205,7 +270,6 @@ NSString *AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_s
     NSLog(url, nil);
 
     if([url hasPrefix:self.settings.callbackUrl]){
-        [self dismissWebView];
         NSString *state = [self getStateFromUrl:url];
         if([state isEqualToString:self.state]){
             [self getResultFromCallbackUrl:url];

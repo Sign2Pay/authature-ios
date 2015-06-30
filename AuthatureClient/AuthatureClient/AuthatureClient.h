@@ -38,4 +38,14 @@ FOUNDATION_EXPORT NSString *const AUTHATURE_SCOPE_SIGNATURE_CAPTURE;
 
 - (void)startGetTokenForScope:(NSString *)scope;
 
+- (NSDictionary *)getStoredTokenForScope:(NSString *)scope;
+
+- (void)verifyStoredTokenValidityforScope:(NSString *)scope
+                                 callBack:(void (^)(BOOL, NSDictionary *))callback
+                            errorCallBack:(void (^)(NSError *)) errorCallback;
+
+- (void)verifyTokenValidity:(NSDictionary *)token
+                  forScope:(NSString *)scope
+                   callBack:(void (^)(BOOL, NSDictionary *))callback
+              errorCallBack:(void (^)(NSError *)) errorCallback;
 @end
