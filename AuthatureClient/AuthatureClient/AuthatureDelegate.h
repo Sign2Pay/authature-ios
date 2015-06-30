@@ -15,5 +15,7 @@
 
 - (void) dismissAuthatureWebView;
 
+- (void) authatureUserInfoReceived:(NSDictionary *) userInfo;
 
+- (void) processAuthatureErrorCode:(NSString *) errorCode withDescription:(NSString *) description;
 @end

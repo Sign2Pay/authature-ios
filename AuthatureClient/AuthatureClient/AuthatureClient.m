@@ -94,30 +94,42 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
     [self.webView loadRequest:request];
 }
 
--(NSDictionary *) parseStateAndCodeFromUrl:(NSString *)url{
-    NSString *state = [[url componentsSeparatedByString:@"state="][1]
+-(NSDictionary *) getStateFromUrl:(NSString *)url{
+    return [[url componentsSeparatedByString:@"state="][1]
             componentsSeparatedByString:@"&"][0];
-    NSString *code = [[url componentsSeparatedByString:@"code="][1]
-            componentsSeparatedByString:@"&"][0];
-
-    return @{
-            @"state" : state,
-            @"code" : code
-    };
 }
 
--(void) getTokenFromCallbackUrl:(NSString *) url{
+-(void) getResultFromCallbackUrl:(NSString *) url{
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager.requestSerializer setValue:@"Authature iOS SDK v0.0.1" forHTTPHeaderField:@"UserAgent"];
 
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+        if(responseObject[@"error_code"]){
+            [self processAuthatureErrorCode:responseObject[@"error_code"]
+                            withDescription:responseObject[@"error_desription"]];
+        }else{
+            if([self.delegate respondsToSelector:@selector(authatureUserInfoReceived:)]){
+                [self.delegate authatureUserInfoReceived:responseObject[@"access_token"]];
+            }
+        }
 
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self processCallbackError:error];
     }];
+}
+
+- (void) processCallbackError:(NSError *) error{
+    if([self.delegate respondsToSelector:@selector(processAuthatureErrorCode:withDescription:)]){
+        [self.delegate processAuthatureErrorCode:[error description] withDescription:@"code"];
+    }
+}
+
+- (void) processAuthatureErrorCode:(NSString *) errorCode withDescription:(NSString *) description{
+    if([self.delegate respondsToSelector:@selector(processAuthatureErrorCode:withDescription:)]){
+        [self.delegate processAuthatureErrorCode:errorCode withDescription:description];
+    }
 }
 
 #pragma mark webViewManagement
@@ -165,9 +177,9 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
 
     if([url hasPrefix:self.settings.callbackUrl]){
         [self dismissWebView];
-        NSDictionary *stateAndCode = [self parseStateAndCodeFromUrl:url];
-        if([stateAndCode[@"state"] isEqualToString:self.state]){
-            [self getTokenFromCallbackUrl:url];
+        NSString *state = [self getStateFromUrl:url];
+        if([state isEqualToString:self.state]){
+            [self getResultFromCallbackUrl:url];
         }
         return NO;
     }
