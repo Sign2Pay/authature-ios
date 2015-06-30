@@ -91,7 +91,7 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
 
 -(void) loadGrantPage{
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: [self buildAuthorizationRequestURL]];
-    [((UIWebView *)self.webView) loadRequest:request];
+    [self.webView loadRequest:request];
 }
 
 -(NSDictionary *) parseStateAndCodeFromUrl:(NSString *)url{
@@ -161,7 +161,7 @@ NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_
 
     NSString *url = [request.mainDocumentURL absoluteString];
     NSLog(@"shouldStartLoadWithRequest");
-    NSLog(url);
+    NSLog(url, nil);
 
     if([url hasPrefix:self.settings.callbackUrl]){
         [self dismissWebView];
