@@ -8,5 +8,12 @@
 
 @protocol AuthatureDelegate <NSObject>
 
--(UIViewController *) controllerForWebView;
+@optional
+- (UIViewController *) controllerForAuthatureWebView;
+
+- (void) presentAuthatureWebView:(UIWebView *) webiew completion:(void (^)(void))completion;
+
+- (void) dismissAuthatureWebView;
+
+
 @end
