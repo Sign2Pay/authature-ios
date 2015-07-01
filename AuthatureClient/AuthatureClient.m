@@ -112,13 +112,16 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if(errorCallback != NULL){
+            if(operation.responseObject != nil){
+                callback(FALSE, operation.responseObject);
+            }
             errorCallback(error);
         }
     }];
 }
 
 - (NSString *)bearerHeaderForToken:(NSDictionary *)token{
-    return [NSString stringWithFormat:@"Bearer: %@", token[@"token"]];
+    return [NSString stringWithFormat:@"Bearer %@", token[@"token"]];
 }
 
 - (NSString *)buildVerifyTokenUrlForScope:(NSString *)scope {
