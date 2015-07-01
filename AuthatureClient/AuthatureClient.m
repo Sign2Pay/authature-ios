@@ -58,19 +58,19 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
     return self;
 }
 
-- (void)startGetTokenForSignatureCapture{
-    [self startGetTokenForScope:AUTHATURE_SCOPE_SIGNATURE_CAPTURE];
+- (void) startAuthatureFlowForSignatureCapture{
+    [self startAuthatureFlowForScope:AUTHATURE_SCOPE_SIGNATURE_CAPTURE];
 }
 
-- (void)startGetTokenForAuthentication{
-    [self startGetTokenForScope:AUTHATURE_SCOPE_AUTHENTICATE];
+- (void) startAuthatureFlowForAuthentication{
+    [self startAuthatureFlowForScope:AUTHATURE_SCOPE_AUTHENTICATE];
 }
 
-- (void)startGetTokenForPreApproval{
-    [self startGetTokenForScope:AUTHATURE_SCOPE_PRE_APPROVAL];
+- (void) startAuthatureFlowForPreapproval{
+    [self startAuthatureFlowForScope:AUTHATURE_SCOPE_PRE_APPROVAL];
 }
 
-- (void)startGetTokenForScope:(NSString *)scope{
+- (void) startAuthatureFlowForScope:(NSString *)scope{
 
     [self SetState];
 
@@ -192,8 +192,8 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
     [manager.requestSerializer setValue:@"Authature iOS SDK v0.0.1" forHTTPHeaderField:@"User-Agent"];
 
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
-        if(responseObject[@"error_code"]){
-            [self processAuthatureErrorCode:responseObject[@"error_code"]
+        if(responseObject[@"error"]){
+            [self processAuthatureErrorCode:responseObject[@"error"]
                             withDescription:responseObject[@"error_desription"]];
             [self dismissWebView];
         }else{

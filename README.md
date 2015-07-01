@@ -26,7 +26,7 @@ With this settings object, you can instantiate an AuthatureClient. A delegate is
 [[AuthatureClient alloc] initWithSettings:clientSettings
                                  delegate:authatureDelegate];
 ```
- 
+
 ### Starting an Authature flow
 
 Depending on your setup Authature supports different scopes.
@@ -34,22 +34,22 @@ You can start the flow for any of these scopes by calling the corresponding meth
 
 Capture (to capture the signature)
 ```objective-c
-[authatureClient  startGetTokenForSignatureCapture]
+[authatureClient  startAuthatureFlowForSignatureCapture]
 ```
 
 Authenticate (to authenticate the user)
 ```objective-c
-[authatureClient  startGetTokenForAuthentication]
+[authatureClient  startAuthatureFlowForAuthentication]
 ```
 
-PreApprove (to preapprove payments) 
+PreApprove (to preapprove payments)
 ```objective-c
-[authatureClient  startGetTokenForPreApproval]
+[authatureClient  startAuthatureFlowForPreApproval]
 ```
 
 If you want a combination of scopes you can call the more generic method:
 ```objective-c
-[authatureClient  startGetTokenForScope:@"authenticate,capture"]
+[authatureClient  startAuthatureFlowForScope:@"authenticate,capture"]
 ```
 
 ### The delegate
@@ -66,9 +66,9 @@ or these 2 methods where you can control how the webview is presented and dismis
 Use this approach if you want to animate the transition.
 
 ```objective-c
-- (void) presentAuthatureWebView:(UIWebView *) webView 
+- (void) presentAuthatureWebView:(UIWebView *) webView
                       completion:(void (^ (void))completion;
-                      
+
 - (void) dismissAuthatureWebView;
 ```
 
@@ -83,10 +83,10 @@ When the the flow resulted in a token:
 When the flow resulted in an error:
 
 ```objective-c
-- (void) processAuthatureErrorCode:(NSString *) 
+- (void) processAuthatureErrorCode:(NSString *)
          errorCode withDescription:(NSString *) description;
 ```
- 
+
 ###Token verification
 You can use the AuthatureClient instance to verify if a token is (still) valid for a certain scope.
 You can do so by calling:
@@ -94,10 +94,10 @@ You can do so by calling:
 ```objective-c
 [authatureClient verifyValidity:token
                       forScope:AUTHATURE_SCOPE_PRE_APPROVAL
-                      callBack:^(BOOL valid, NSDictionary *dictionary) {} 
+                      callBack:^(BOOL valid, NSDictionary *dictionary) {}
                  errorCallBack:^(NSError *error) {}];
 ```
- 
+
 ###Token storage
 The AuthatureClient can be configured to automatically store a token per requested scope (off by default).
 If you turn on this feature, the AuthatureClient will always send user details into the Authature flow if a new token is requested. This way, your users don't have to re-enter their details (e-mail) when going through the flow.
@@ -110,12 +110,12 @@ authatureClient.automaticTokenStorageEnabled = TRUE;
 If you want to get the automatically stored token for a scope:
 ```objective-c
 [authatureClient getStoredTokenForScope:AUTHATURE_SCOPE_PRE_APPROVAL];
-``` 
+```
 
 Likewise, you you want to validate a stored token for it's scope
 
 ```objective-c
 [authatureClient verifyStoredTokenValidityforScope:AUTHATURE_SCOPE_PRE_APPROVAL
-                                          callBack:^(BOOL valid, NSDictionary *dictionary) {}   
+                                          callBack:^(BOOL valid, NSDictionary *dictionary) {}
                                      errorCallBack:^(NSError *error) {}];
 ```
