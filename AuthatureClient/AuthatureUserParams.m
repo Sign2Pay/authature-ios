@@ -3,10 +3,10 @@
 // Copyright (c) 2015 Sign2Pay. All rights reserved.
 //
 
-#import "AuthatureUser.h"
+#import "AuthatureUserParams.h"
 
 
-@implementation AuthatureUser {
+@implementation AuthatureUserParams {
 
 }
 @end

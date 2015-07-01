@@ -6,7 +6,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface AuthatureUser : NSObject
+@interface AuthatureUserParams : NSObject
 @property (strong, nonatomic) NSString *firstName;
 @property (strong, nonatomic) NSString *lastName;
 @property (strong, nonatomic) NSString *identifier;

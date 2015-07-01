@@ -10,8 +10,9 @@
 		36A80B091B41401700E2A854 /* AuthatureClient.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 36A80B081B41401700E2A854 /* AuthatureClient.h */; };
 		36A80B0B1B41401700E2A854 /* AuthatureClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A80B0A1B41401700E2A854 /* AuthatureClient.m */; };
 		36CFF6301B4149F800020F2C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CFF62F1B4149F800020F2C /* UIKit.framework */; };
+		C8C1A179B16DED2297199630 /* AuthatureUserParams.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C1A1953EBCABBC4480AE74 /* AuthatureUserParams.m */; };
 		C8C1A8CADA99DC2DE52BC864 /* AuthatureClientSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C1A2E738F59D47AC818414 /* AuthatureClientSettings.m */; };
-		C8C1AE07C82E26DC314F7ACA /* AuthatureUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C1A7662998369B0FBCB0A3 /* AuthatureUser.m */; };
+		C8C1A8F0B58FE7DD489E16D3 /* AuthatureAccessTokenStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C1AC2BD4BAEBEF888E2468 /* AuthatureAccessTokenStorage.m */; };
 		D04ECBD947D5DD5C2AD97017 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B05FBB821204D03B543A816E /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -36,11 +37,13 @@
 		4B53A63476998ED2F12F9D9C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		5D4DEF5077E3EA6DB44A3E95 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B05FBB821204D03B543A816E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8C1A1953EBCABBC4480AE74 /* AuthatureUserParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthatureUserParams.m; sourceTree = "<group>"; };
 		C8C1A2E738F59D47AC818414 /* AuthatureClientSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthatureClientSettings.m; sourceTree = "<group>"; };
 		C8C1A2F61478ADA3A182A70C /* AuthatureDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthatureDelegate.h; sourceTree = "<group>"; };
-		C8C1A7662998369B0FBCB0A3 /* AuthatureUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthatureUser.m; sourceTree = "<group>"; };
+		C8C1A504B497BF1A786CB7F8 /* AuthatureAccessTokenStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthatureAccessTokenStorage.h; sourceTree = "<group>"; };
 		C8C1A7D9C8E7EA3F6388F4E6 /* AuthatureClientSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthatureClientSettings.h; sourceTree = "<group>"; };
-		C8C1ADCF453D24DECD53DEAD /* AuthatureUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthatureUser.h; sourceTree = "<group>"; };
+		C8C1A9939D27B518A0296702 /* AuthatureUserParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthatureUserParams.h; sourceTree = "<group>"; };
+		C8C1AC2BD4BAEBEF888E2468 /* AuthatureAccessTokenStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthatureAccessTokenStorage.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,8 +86,10 @@
 				C8C1A2E738F59D47AC818414 /* AuthatureClientSettings.m */,
 				C8C1A7D9C8E7EA3F6388F4E6 /* AuthatureClientSettings.h */,
 				C8C1A2F61478ADA3A182A70C /* AuthatureDelegate.h */,
-				C8C1A7662998369B0FBCB0A3 /* AuthatureUser.m */,
-				C8C1ADCF453D24DECD53DEAD /* AuthatureUser.h */,
+				C8C1A9939D27B518A0296702 /* AuthatureUserParams.h */,
+				C8C1A1953EBCABBC4480AE74 /* AuthatureUserParams.m */,
+				C8C1A504B497BF1A786CB7F8 /* AuthatureAccessTokenStorage.h */,
+				C8C1AC2BD4BAEBEF888E2468 /* AuthatureAccessTokenStorage.m */,
 			);
 			path = AuthatureClient;
 			sourceTree = "<group>";
@@ -199,7 +204,8 @@
 			files = (
 				36A80B0B1B41401700E2A854 /* AuthatureClient.m in Sources */,
 				C8C1A8CADA99DC2DE52BC864 /* AuthatureClientSettings.m in Sources */,
-				C8C1AE07C82E26DC314F7ACA /* AuthatureUser.m in Sources */,
+				C8C1A179B16DED2297199630 /* AuthatureUserParams.m in Sources */,
+				C8C1A8F0B58FE7DD489E16D3 /* AuthatureAccessTokenStorage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +298,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 			};
 			name = Debug;
 		};
@@ -303,6 +310,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 			};
 			name = Release;
 		};

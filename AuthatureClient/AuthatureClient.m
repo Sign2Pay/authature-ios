@@ -45,12 +45,12 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
 
 @implementation AuthatureClient
 - (instancetype)initWithSettings:(AuthatureClientSettings *)settings
-                            user:(AuthatureUser*) user
-                        delegate:(id<AuthatureDelegate>) delegate{
+                      userParams:(AuthatureUserParams *) userParams
+                     andDelegate:(id<AuthatureDelegate>) delegate{
     self = [super init];
     if (self) {
         self.settings = settings;
-        self.user = user;
+        self.userParams = userParams;
         self.deviceUid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
         self.delegate = delegate;
     }
@@ -138,10 +138,10 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
     NSString * userFirstName = @"";
     NSString * userLastName = @"";
 
-    if(self.user != NULL){
-        userIdentifier = self.user.identifier;
-        userFirstName = self.user.firstName;
-        userLastName = self.user.lastName;
+    if(self.userParams != NULL){
+        userIdentifier = self.userParams.identifier;
+        userFirstName = self.userParams.firstName;
+        userLastName = self.userParams.lastName;
     }else if(self.automaticTokenStorageEnabled){
         NSDictionary *accessToken = [self getStoredTokenForScope:scope];
         if(accessToken != NULL){
