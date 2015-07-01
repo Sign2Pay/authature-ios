@@ -30,15 +30,17 @@ FOUNDATION_EXPORT NSString *const AUTHATURE_SCOPE_SIGNATURE_CAPTURE;
                    userParams:(AuthatureUserParams *) userParams
                   andDelegate:(NSObject<AuthatureDelegate>*) delegate;
 
-- (void) startAuthatureFlowForPreapproval;
+- (void)startAuthatureFlowForPreapproval;
 
-- (void) startAuthatureFlowForAuthentication;
+- (void)startAuthatureFlowForAuthentication;
 
-- (void) startAuthatureFlowForSignatureCapture;
+- (void)startAuthatureFlowForSignatureCapture;
 
-- (void) startAuthatureFlowForScope:(NSString *)scope;
+- (void)startAuthatureFlowForScope:(NSString *)scope;
 
 - (NSDictionary *)getStoredTokenForScope:(NSString *)scope;
+
+- (void)destroyStoredTokenForScope:(NSString *)scope;
 
 - (void)verifyStoredTokenValidityforScope:(NSString *)scope
                                  callBack:(void (^)(BOOL, NSDictionary *))callback

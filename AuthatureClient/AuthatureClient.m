@@ -171,6 +171,11 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
     return [AuthatureAccessTokenStorage getAccessTokenForClientId:self.settings.clientId andKey:scope];
 }
 
+- (void)destroyStoredTokenForScope:(NSString *)scope{
+    [AuthatureAccessTokenStorage destroyAccessTokenForClientId:self.settings.clientId
+                                                        andKey:scope];
+}
+
 - (NSString *)encodeParam:(NSString *) parameter {
     return [parameter stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
 }
