@@ -9,8 +9,6 @@
 
 @interface UIImageView (Authature)
 
-+ (UIImage*) imageViewWithBankLogos;
-
 -(void) useAsAuthatureBankLogos;
 
 -(void) useAsAuthatureBankLogosWithToken:(NSDictionary *)accessToken;
