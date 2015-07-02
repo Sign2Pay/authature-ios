@@ -67,13 +67,13 @@ FOUNDATION_EXPORT NSString *const AUTHATURE_SCOPE_SIGNATURE_CAPTURE;
 * Starts the Authature Flow to get a token for the authenticate scope
 */
 - (void)startAuthatureFlowForAuthenticationWithSuccess:(void(^)(NSDictionary *))successCallback
-                                            andFailure:(void(^)(NSString *, NSString *))errorCallback;;
+                                            andFailure:(void(^)(NSString *, NSString *))errorCallback;
 
 /**
 * Starts the Authature Flow to get a token for the capture scope
 */
 - (void)startAuthatureFlowForSignatureCaptureWithSuccess:(void(^)(NSDictionary *))successCallback
-                                              andFailure:(void(^)(NSString *, NSString *))errorCallback;;
+                                              andFailure:(void(^)(NSString *, NSString *))errorCallback;
 
 /**
 * Starts the Authature Flow to get a token for a custom scopes
