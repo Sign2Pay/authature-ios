@@ -32,6 +32,7 @@ You can start the flow for any of these scopes by calling the corresponding meth
 
 All these methods have 2 blocks as parameters, a successCallback and an errorCallback.
 (note, since this is async, its is best to keep a strong reference to the client)
+
 Capture (to capture the signature)
 ```objective-c
 [client startAuthatureFlowForSignatureCaptureWithSuccess:^(NSDictionary *dictionary) {
@@ -70,7 +71,7 @@ If you want a combination of scopes you can call the more generic method:
 
 ## The delegate
 
-The AuthatureClient uses a webview to go throught Authature's OAuth2 flow.
+The AuthatureClient uses a webview to go through Authature's OAuth2 flow.
 
 You have to implement either this method, which has to return a controller that can be used to present a view.
 
@@ -86,17 +87,6 @@ Use this approach if you want to animate the transition.
                       completion:(void (^ (void))completion;
 
 - (void) dismissAuthatureWebView;
-```
-
-##Token verification
-You can use the AuthatureClient instance to verify if a token is (still) valid for a certain scope.
-You can do so by calling:
-
-```objective-c
-[authatureClient verifyValidity:token
-                      forScope:AUTHATURE_SCOPE_PRE_APPROVAL
-                      callBack:^(BOOL valid, NSDictionary *dictionary) {}
-                 errorCallBack:^(NSError *error) {}];
 ```
 
 ##Token storage
@@ -121,6 +111,23 @@ Likewise, if you want to validate a stored token for it's scope
                                      errorCallBack:^(NSError *error) {}];
 ```
 
+##Token verification
+You can use the AuthatureClient instance to verify if a token is (still) valid for a certain scope.
+You can do so by calling:
+
+```objective-c
+[authatureClient verifyValidity:token
+                      forScope:AUTHATURE_SCOPE_PRE_APPROVAL
+                      callBack:^(BOOL valid, NSDictionary *dictionary) {}
+                 errorCallBack:^(NSError *error) {}];
+```
+
+If you are using the automatic token storage, you can verify the stored token by calling:
+```objective-c
+[[self getAuthatureClient] verifyStoredTokenValidityforScope:AUTHATURE_SCOPE_PRE_APPROVAL
+                                                    callBack:^(BOOL tokenIsValid, NSDictionary *responseObject) {}
+                                               errorCallBack:^(NSError *error) {}];
+```
 
 ##AuthatureAccessTokenStorage
 You can also conveniently interact with the token storage directly to add/remove your tokens.
