@@ -9,6 +9,7 @@
 
 @interface AuthatureBankLogoTimer()
 @property(nonatomic) int currentBankLogoUrlIndex;
+@property(strong, nonatomic) NSString *countryCode;
 @property(strong, nonatomic) NSTimer *timer;
 @end
 
@@ -18,23 +19,23 @@
 
 static NSString *MISSING_BANK_LOGO = @"https://app.sign2pay.com/banks/missing.png";
 
-+(AuthatureBankLogoTimer *) sharedInstance{
-    static AuthatureBankLogoTimer *sharedTimer= nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedTimer = [[self alloc] init];
-        [sharedTimer initImageUrls];
-        sharedTimer.timer = [NSTimer scheduledTimerWithTimeInterval:2
-                                                             target:sharedTimer
-                                                           selector:@selector(onTimer)
-                                                           userInfo:nil
-                                                            repeats:YES];
-
-    });
-
-    return sharedTimer;
+-(AuthatureBankLogoTimer *)init{
+    self = [super init];
+    if(self){
+        [self initImageUrls];
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:2
+                                                      target:self
+                                                    selector:@selector(onTimer)
+                                                    userInfo:nil
+                                                     repeats:YES];
+    }
+    return self;
 }
 
+- (void)setCountryCode:(NSString *)countryCode {
+    self.countryCode = countryCode;
+    [self initImageUrls];
+}
 
 -(void) onTimer{
     self.currentBankLogoUrlIndex++;
