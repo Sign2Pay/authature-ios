@@ -12,7 +12,7 @@ Drag and drop authature-ios directory into your project.
 First create an instance of AuthatureClientSettings to hold your client details:
 ```objective-c
 self.client = [[AuthatureClientSettings alloc] initWithClientId:@"your-client-id"
-                                      callbackUrl:@"your-servers-oauth-callback-url"];
+                                                    callbackUrl:@"your-servers-oauth-callback-url"];
 ```
 
 With this settings object, you can instantiate an AuthatureClient. 
@@ -22,7 +22,7 @@ More info on the delegate below.
 
 ```objective-c
 self.client = [[AuthatureClient alloc] initWithSettings:clientSettings
-                                 delegate:authatureDelegate];
+                                               delegate:authatureDelegate];
 ```
 
 ### Starting an Authature flow
@@ -34,29 +34,41 @@ All these methods have 2 blocks as parameters, a successCallback and an errorCal
 (note, since this is async, its is best to keep a strong reference to the client)
 Capture (to capture the signature)
 ```objective-c
-[client startAuthatureFlowForSignatureCaptureWithSuccess:(void(^)(NSDictionary *))successCallback
-                                              andFailure:(void(^)(NSString *, NSString *))errorCallback];
+[client startAuthatureFlowForSignatureCaptureWithSuccess:^(NSDictionary *dictionary) {
+        //ok
+    } andFailure:^(NSString *code, NSString *description) {
+        //fail
+    }];
 ```
 
 Authenticate (to authenticate the user)
 ```objective-c
-[client startAuthatureFlowForAuthenticationWithSuccess:(void(^)(NSDictionary *))successCallback
-                                            andFailure:(void(^)(NSString *, NSString *))errorCallback];
+[client startAuthatureFlowForAuthenticationWithSuccess:^(NSDictionary *dictionary) {
+        //ok
+    } andFailure:^(NSString *code, NSString *description) {
+        /fail
+    }];
 ```
 
 PreApprove (to preapprove payments)
 ```objective-c
-[client startAuthatureFlowForPreapprovalWithSuccess:(void(^)(NSDictionary *))successCallback
-                                         andFailure:(void(^)(NSString *, NSString *))errorCallback];
+[client startAuthatureFlowForPreapprovalWithSuccess:^(NSDictionary *dictionary) {
+        //ok
+    } andFailure:^(NSString *code, NSString *description) {
+        //fail
+    }];
 ```
 
 If you want a combination of scopes you can call the more generic method:
 ```objective-c
-[client startAuthatureFlowForScope:(void(^)(NSDictionary *))successCallback
-                        andFailure:(void(^)(NSString *, NSString *))errorCallback];
+[client startAuthatureFlowForScope:@"authanticate,preapproveSuccess" withSuccess:^(NSDictionary *dictionary) {
+      //ok
+    } andFailure:^(NSString *code, NSString *description) {
+      //fail
+    }];
 ```
 
-### The delegate
+## The delegate
 
 The AuthatureClient uses a webview to go throught Authature's OAuth2 flow.
 
@@ -76,22 +88,7 @@ Use this approach if you want to animate the transition.
 - (void) dismissAuthatureWebView;
 ```
 
-After the Authature flow is finished, the AuthatureClient calls the delegate with one of these methods.
-
-When the the flow resulted in a token:
-
-```objective-c
-- (void) authatureAccessTokenReceived:(NSDictionary *) accessToken;
-```
-
-When the flow resulted in an error:
-
-```objective-c
-- (void) processAuthatureErrorCode:(NSString *)
-         errorCode withDescription:(NSString *) description;
-```
-
-###Token verification
+##Token verification
 You can use the AuthatureClient instance to verify if a token is (still) valid for a certain scope.
 You can do so by calling:
 
@@ -102,7 +99,7 @@ You can do so by calling:
                  errorCallBack:^(NSError *error) {}];
 ```
 
-###Token storage
+##Token storage
 The AuthatureClient can be configured to automatically store a token per requested scope (off by default).
 If you turn on this feature, the AuthatureClient will always send user details into the Authature flow if a new token is requested. This way, your users don't have to re-enter their details (e-mail) when going through the flow.
 
@@ -116,10 +113,69 @@ If you want to get the automatically stored token for a scope:
 [authatureClient getStoredTokenForScope:AUTHATURE_SCOPE_PRE_APPROVAL];
 ```
 
-Likewise, you you want to validate a stored token for it's scope
+Likewise, if you want to validate a stored token for it's scope
 
 ```objective-c
 [authatureClient verifyStoredTokenValidityforScope:AUTHATURE_SCOPE_PRE_APPROVAL
                                           callBack:^(BOOL valid, NSDictionary *dictionary) {}
                                      errorCallBack:^(NSError *error) {}];
 ```
+
+
+##AuthatureAccessTokenStorage
+You can also conveniently interact with the token storage directly to add/remove your tokens.
+Tokens are organized by clientId and a key per token.
+TIP: A good candidate for the key is the token value of the access token.
+Store a token like this:
+```objective-c
+[AuthatureAccessTokenStorage saveAccessToken:accessToken
+                                 forClientId:clientId
+                                     withKey:accessToken[@"token"];
+```                       
+
+Reading a token:
+```objective-c
+return [AuthatureAccessTokenStorage getAccessTokenForClientId:clientId 
+                                                       andKey:"123"];
+````
+
+Delete a token:
+```objective-c
+[AuthatureAccessTokenStorage destroyAccessTokenForClientId:clientId
+                                                    andKey:accessToken[@"token"]];
+```
+
+##UI Components
+When Authature is combined with Sign2Pay, a token can be linked to a bank account.
+For conversion reason, you may want to display the logo's of supported banks in your app.
+Also, when the user has a token for the preapprove scope the logo of that bank (f.i. on a checkout button)
+
+UIImageView+Authature and UIButton+Authature add methods to UIImageView and UIButton to make this happen.
+
+Rotate the images of the supported banks based on the user'sIP  in a UIImage:
+```objective-c
+[imageView useAsAuthatureBankLogos];
+```
+
+Rotate the images of the supported banks on the user's IP on a UIButton:
+```objective-c
+[button useAuthatureBankLogos];
+```
+
+Rotate the images of the supported banks for a specific country in a UIImage
+```objective-c
+[imageView useAsAuthatureBankLogosForCountryCode:@"BE"];
+```
+Rotate the images of the supported banks a specific country on a UIButton:
+```objective-c
+[button useAuthatureBankLogosForCountryCode:@"BE"];
+```
+
+Show the bank logo for the account linked to a given token on a UIView
+```objective-c
+[imageView useAsAuthatureBankLogosWithToken:tokenForCheckout];
+````
+Show the bank logo for the account linked to a given token on a UIButton
+```objective-c
+[button useAuthatureBankLogosWithToken:tokenForCheckout];
+````
