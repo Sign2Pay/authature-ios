@@ -2,28 +2,26 @@
 
 The Authature iOS SDK is designed to facilitate the integration Authature within your iOS apps.
 
+##Getting started
+Drag and drop authature-ios directory into your project.
 
-The SDK supplies integration points at different levels of abstraction.
+(A pod will be released soon)
 
-Using the low-level api you can manipulate every aspect of the Authature flow and token management.
-
-The UI level sdk gives you less flexibilitiy but makes it dead simple to integrete Authature in your app.
-
-## Low-level api aka AuthatureClient
-### Setting-up the AuthatureClient
-
+## Setting-up the AuthatureClient
 
 First create an instance of AuthatureClientSettings to hold your client details:
-
 ```objective-c
-[[AuthatureClientSettings alloc] initWithClientId:@"your-client-id"
+self.client = [[AuthatureClientSettings alloc] initWithClientId:@"your-client-id"
                                       callbackUrl:@"your-servers-oauth-callback-url"];
 ```
 
-With this settings object, you can instantiate an AuthatureClient. A delegate is also needed, see below for further details.
+With this settings object, you can instantiate an AuthatureClient. 
+AuthatureClient uses a UIWebView to load the OAuth2 pages. 
+The delegate gives you control over where this webview ends up in your view hierachy.
+More info on the delegate below.
 
 ```objective-c
-[[AuthatureClient alloc] initWithSettings:clientSettings
+self.client = [[AuthatureClient alloc] initWithSettings:clientSettings
                                  delegate:authatureDelegate];
 ```
 
@@ -32,24 +30,30 @@ With this settings object, you can instantiate an AuthatureClient. A delegate is
 Depending on your setup Authature supports different scopes.
 You can start the flow for any of these scopes by calling the corresponding method
 
+All these methods have 2 blocks as parameters, a successCallback and an errorCallback.
+(note, since this is async, its is best to keep a strong reference to the client)
 Capture (to capture the signature)
 ```objective-c
-[authatureClient  startAuthatureFlowForSignatureCapture]
+[client startAuthatureFlowForSignatureCaptureWithSuccess:(void(^)(NSDictionary *))successCallback
+                                              andFailure:(void(^)(NSString *, NSString *))errorCallback];
 ```
 
 Authenticate (to authenticate the user)
 ```objective-c
-[authatureClient  startAuthatureFlowForAuthentication]
+[client startAuthatureFlowForAuthenticationWithSuccess:(void(^)(NSDictionary *))successCallback
+                                            andFailure:(void(^)(NSString *, NSString *))errorCallback];
 ```
 
 PreApprove (to preapprove payments)
 ```objective-c
-[authatureClient  startAuthatureFlowForPreApproval]
+[client startAuthatureFlowForPreapprovalWithSuccess:(void(^)(NSDictionary *))successCallback
+                                         andFailure:(void(^)(NSString *, NSString *))errorCallback];
 ```
 
 If you want a combination of scopes you can call the more generic method:
 ```objective-c
-[authatureClient  startAuthatureFlowForScope:@"authenticate,capture"]
+[client startAuthatureFlowForScope:(void(^)(NSDictionary *))successCallback
+                        andFailure:(void(^)(NSString *, NSString *))errorCallback];
 ```
 
 ### The delegate
