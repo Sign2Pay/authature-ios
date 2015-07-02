@@ -40,7 +40,8 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
 @property (strong, nonatomic) UIViewController *webViewController;
 @property (strong, nonatomic) UIWebView *webView;
 @property (strong, nonatomic) NSString * state;
-
+@property (nonatomic, copy) void (^currentActionCallback)(NSDictionary *);
+@property (nonatomic, copy) void (^currentActionErrorCallback)(NSString *, NSString *);
 @end
 
 @implementation AuthatureClient
@@ -58,19 +59,33 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
     return self;
 }
 
-- (void) startAuthatureFlowForSignatureCapture{
-    [self startAuthatureFlowForScope:AUTHATURE_SCOPE_SIGNATURE_CAPTURE];
+- (void) startAuthatureFlowForSignatureCaptureWithSuccess:(void(^)(NSDictionary *))successCallback
+                                               andFailure:(void(^)(NSString *, NSString *))errorCallback;{
+    [self startAuthatureFlowForScope:AUTHATURE_SCOPE_SIGNATURE_CAPTURE
+                         withSuccess:successCallback
+                          andFailure:errorCallback];
 }
 
-- (void) startAuthatureFlowForAuthentication{
-    [self startAuthatureFlowForScope:AUTHATURE_SCOPE_AUTHENTICATE];
+- (void) startAuthatureFlowForAuthenticationWithSuccess:(void(^)(NSDictionary *))successCallback
+                                             andFailure:(void(^)(NSString *, NSString *))errorCallback;{
+    [self startAuthatureFlowForScope:AUTHATURE_SCOPE_AUTHENTICATE
+                         withSuccess:successCallback
+                          andFailure:errorCallback];
 }
 
-- (void) startAuthatureFlowForPreapproval{
-    [self startAuthatureFlowForScope:AUTHATURE_SCOPE_PRE_APPROVAL];
+- (void) startAuthatureFlowForPreapprovalWithSuccess:(void(^)(NSDictionary *))successCallback
+                                          andFailure:(void(^)(NSString *, NSString *))errorCallback;{
+    [self startAuthatureFlowForScope:AUTHATURE_SCOPE_PRE_APPROVAL
+                         withSuccess:successCallback
+                          andFailure:errorCallback];
 }
 
-- (void) startAuthatureFlowForScope:(NSString *)scope{
+- (void) startAuthatureFlowForScope:(NSString *)scope
+                        withSuccess:(void(^)(NSDictionary *))successCallback
+                         andFailure:(void(^)(NSString *, NSString *))errorCallback;{
+
+    self.currentActionCallback = successCallback;
+    self.currentActionErrorCallback = errorCallback;
 
     [self SetState];
 
@@ -200,7 +215,7 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         if(responseObject[@"error"]){
             [self processAuthatureErrorCode:responseObject[@"error"]
-                            withDescription:responseObject[@"error_desription"]];
+                            withDescription:responseObject[@"error_description"]];
             [self dismissWebView];
         }else{
             [self processAccessToken:responseObject[@"access_token"]];
@@ -218,21 +233,18 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
                                          forClientId:self.settings.clientId
                                              withKey:accessToken[@"scopes"]];
     }
-    if([self.delegate respondsToSelector:@selector(authatureAccessTokenReceived:)]){
-        [self.delegate authatureAccessTokenReceived:accessToken];
-    }
+
+    self.currentActionCallback(accessToken);
 }
 
 - (void) processCallbackError:(NSError *) error{
-    if([self.delegate respondsToSelector:@selector(processAuthatureErrorCode:withDescription:)]){
-        [self.delegate processAuthatureErrorCode:[error description] withDescription:@"code"];
-    }
+    self.currentActionErrorCallback(@"code", [error description]);
+
 }
 
 - (void) processAuthatureErrorCode:(NSString *) errorCode withDescription:(NSString *) description{
-    if([self.delegate respondsToSelector:@selector(processAuthatureErrorCode:withDescription:)]){
-        [self.delegate processAuthatureErrorCode:errorCode withDescription:description];
-    }
+    self.currentActionErrorCallback(errorCode, description);
+
 }
 
 #pragma mark webViewManagement

@@ -15,8 +15,4 @@
 - (void) presentAuthatureWebView:(UIWebView *) webView completion:(void (^)(void))completion;
 
 - (void) dismissAuthatureWebView;
-
-- (void) authatureAccessTokenReceived:(NSDictionary *) accessToken;
-
-- (void) processAuthatureErrorCode:(NSString *) errorCode withDescription:(NSString *) description;
 @end
