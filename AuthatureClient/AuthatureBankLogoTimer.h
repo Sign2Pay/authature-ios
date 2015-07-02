@@ -8,9 +8,9 @@ static NSString *BANK_LOGO_TIMER_NOTIFICATION_NAME = @"Authature/BankLogoTimer";
 
 @interface AuthatureBankLogoTimer : NSObject
 
-@property(strong, nonatomic) NSArray *bankLogoUrls;
-
-@property(nonatomic) NSString *currenLogoUrl;
-
 +(AuthatureBankLogoTimer *) sharedInstance;
+
+-(NSString *)currentDefaultLogo;
+
+-(NSString *)currentLogoUrlForCountryCode:(NSString *)countryCode;
 @end

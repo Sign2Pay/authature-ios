@@ -9,6 +9,8 @@
 
 -(void) useAuthatureBankLogos;
 
+-(void) useAsAuthatureBankLogosForCountryCode:(NSString *)countryCode;
+
 -(void) useAuthatureBankLogosWithToken:(NSDictionary *)accessToken;
 
 @end
