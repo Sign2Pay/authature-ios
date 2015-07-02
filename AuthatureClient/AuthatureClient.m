@@ -114,8 +114,9 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
         if(errorCallback != NULL){
             if(operation.responseObject != nil){
                 callback(FALSE, operation.responseObject);
+            }else{
+                errorCallback(error);
             }
-            errorCallback(error);
         }
     }];
 }
