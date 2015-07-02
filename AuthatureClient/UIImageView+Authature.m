@@ -3,9 +3,9 @@
 // Copyright (c) 2015 Sign2Pay. All rights reserved.
 //
 
+#import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import "UIImageView+Authature.h"
 #import "AuthatureBankLogoTimer.h"
-#import "AuthatureBankLogoTimerManager.h"
 
 
 @implementation UIImageView (Authature)
@@ -16,7 +16,7 @@
                                                  name:BANK_LOGO_TIMER_NOTIFICATION_NAME
                                                object:nil];
 
-    [self setImageWithURLString:[[AuthatureBankLogoTimerManager defaultTimer] currenLogoUrl]];
+    [self setImageWithURLString:[[AuthatureBankLogoTimer sharedInstance] currenLogoUrl]];
 }
 
 - (void)setImageWithURLString:(NSString *)string {
@@ -25,13 +25,7 @@
 }
 
 -(void) useAsAuthatureBankLogosWithToken:(NSDictionary *)accessToken{
-    [[NSNotificationCenter defaultCenter] removeObserver:self]; //we should not listen to the banklogotimer anymore.
-    NSString *imageUrl = accessToken[@"account"][@"bank"][@"logo"];
-    if(imageUrl != nil){
-        [self setImageWithURLString:imageUrl];
-    }else{
-        [self setImage:nil];
-    }
+
 }
 
 - (void)dealloc{
@@ -39,7 +33,7 @@
 }
 
 -(void) onBankLogoTimer{
-    [self setImageWithURLString:[[AuthatureBankLogoTimerManager defaultTimer] currenLogoUrl]];
+    [self setImageWithURLString:[[AuthatureBankLogoTimer sharedInstance] currenLogoUrl]];
 }
 
 @end

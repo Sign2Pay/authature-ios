@@ -12,4 +12,5 @@ static NSString *BANK_LOGO_TIMER_NOTIFICATION_NAME = @"Authature/BankLogoTimer";
 
 @property(nonatomic) NSString *currenLogoUrl;
 
++(AuthatureBankLogoTimer *) sharedInstance;
 @end

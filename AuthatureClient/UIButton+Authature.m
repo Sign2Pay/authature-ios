@@ -5,7 +5,6 @@
 #import "UIButton+Authature.h"
 #import "AuthatureBankLogoTimer.h"
 #import "AFNetworking/UIButton+AFNetworking.h"
-#import "AuthatureBankLogoTimerManager.h"
 
 @implementation UIButton (Authature)
 
@@ -16,30 +15,24 @@
                                                  name:BANK_LOGO_TIMER_NOTIFICATION_NAME
                                                object:nil];
 
-    [self setImageWithURLString:[[AuthatureBankLogoTimerManager defaultTimer] currenLogoUrl]];
+    [self setImageWithURLString:[[AuthatureBankLogoTimer sharedInstance] currenLogoUrl]];
 }
 
 -(void) useAuthatureBankLogosWithToken:(NSDictionary *)accessToken{
-    [[NSNotificationCenter defaultCenter] removeObserver:self]; //we should not listen to the banklogotimer anymore.
-    NSString *imageUrl = accessToken[@"account"][@"bank"][@"logo"];
-    if(imageUrl != nil){
-        [self setImageWithURLString:imageUrl];
-    }else{
-        [self setBackgroundImage:nil forState:UIControlStateNormal];
-    }
+
 }
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)setImageWithURLString:(NSString *)urlString {
-    NSURL *url = [NSURL URLWithString:urlString];
+- (void)setImageWithURLString:(NSString *)string {
+    NSURL *url = [NSURL URLWithString:string];
     [self setBackgroundImageForState:UIControlStateNormal withURL:url];
 }
 
 -(void) onBankLogoTimer{
-    NSString *currentLogo = [[AuthatureBankLogoTimerManager defaultTimer] currenLogoUrl];
+    NSString *currentLogo = [[AuthatureBankLogoTimer sharedInstance] currenLogoUrl];
     [self setImageWithURLString:currentLogo];
 }
 
