@@ -8,25 +8,12 @@
 #import "UIImageView+Authature.h"
 #import "AuthatureBankLogoTimer.h"
 
-static char COUNTRY_CODE_KEY;
-
 @implementation UIImageView (Authature)
-
--(NSString *)countryCode{
-    return objc_getAssociatedObject(self, COUNTRY_CODE_KEY) ;
-}
-
--(void) setCountryCode:(NSString *)countryCode
-{
-    objc_setAssociatedObject(self, COUNTRY_CODE_KEY, countryCode, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
 -(void) useAsAuthatureBankLogos{
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onBankLogoTimer)
                                                  name:BANK_LOGO_TIMER_NOTIFICATION_NAME
                                                object:nil];
-
     [self updateImage];
 
 }
@@ -46,8 +33,17 @@ static char COUNTRY_CODE_KEY;
     [self setImageWithURLString:accessToken[@"account"][@"bank"][@"logo"]];
 }
 
+-(NSString *)countryCode{
+    return objc_getAssociatedObject(self, @selector(countryCode)) ;
+}
+
+-(void) setCountryCode:(NSString *)countryCode
+{
+    objc_setAssociatedObject(self, @selector(countryCode), countryCode, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 - (void)dealloc{
-    objc_setAssociatedObject(self, COUNTRY_CODE_KEY, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(countryCode), nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

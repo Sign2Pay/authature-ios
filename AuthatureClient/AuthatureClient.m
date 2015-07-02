@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Sign2Pay. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "AuthatureClient.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "AuthatureAccessTokenStorage.h"
@@ -24,8 +23,8 @@ NSString *AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?"
                             "&redirect_uri=%@"
                             "&state=%@"
                             "&device_uid=%@"
-                            "&scope=%@" //preapproval
-                            "&user_params[identifier]=%@" //email
+                            "&scope=%@"
+                            "&user_params[identifier]=%@"
                             "&user_params[first_name]=%@"
                             "&user_params[last_name]=%@";
 
@@ -45,6 +44,7 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
 @end
 
 @implementation AuthatureClient
+
 - (instancetype)initWithSettings:(AuthatureClientSettings *)settings
                       userParams:(AuthatureUserParams *) userParams
                      andDelegate:(id<AuthatureDelegate>) delegate{
@@ -136,6 +136,16 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
     }];
 }
 
+- (NSDictionary *)getStoredTokenForScope:(NSString *)scope {
+    return [AuthatureAccessTokenStorage getAccessTokenForClientId:self.settings.clientId andKey:scope];
+}
+
+- (void)destroyStoredTokenForScope:(NSString *)scope{
+    [AuthatureAccessTokenStorage destroyAccessTokenForClientId:self.settings.clientId
+                                                        andKey:scope];
+}
+
+#pragma mark privates
 - (NSString *)bearerHeaderForToken:(NSDictionary *)token{
     return [NSString stringWithFormat:@"Bearer %@", token[@"token"]];
 }
@@ -150,6 +160,10 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
 
 - (void)SetState {
     self.state = [[NSUUID UUID] UUIDString];
+}
+
+- (NSString *)encodeParam:(NSString *) parameter {
+    return [parameter stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
 }
 
 -(NSURL *) buildAuthorizationRequestURL:(NSString *)scope{
@@ -181,19 +195,6 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
                     [self encodeParam:userLastName]];  //user_params[last_name]
 
     return [NSURL URLWithString:urlString];
-}
-
-- (NSDictionary *)getStoredTokenForScope:(NSString *)scope {
-    return [AuthatureAccessTokenStorage getAccessTokenForClientId:self.settings.clientId andKey:scope];
-}
-
-- (void)destroyStoredTokenForScope:(NSString *)scope{
-    [AuthatureAccessTokenStorage destroyAccessTokenForClientId:self.settings.clientId
-                                                        andKey:scope];
-}
-
-- (NSString *)encodeParam:(NSString *) parameter {
-    return [parameter stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
 }
 
 -(void) loadGrantPageWithScope:(NSString *)scope{
@@ -283,6 +284,7 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
     self.webViewController = NULL;
 
 }
+
 #pragma mark UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
 
@@ -299,13 +301,16 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
     }
     return YES;
 }
+
 - (void)webViewDidStartLoad:(UIWebView *)webView{
 
     NSLog(@"Did start loading");
 }
+
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     NSLog(@"Did finish loading");
 }
+
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
     NSLog(@"ERROR LOADING PAGE");
 }

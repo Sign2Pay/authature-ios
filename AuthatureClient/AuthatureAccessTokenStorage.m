@@ -3,10 +3,8 @@
 // Copyright (c) 2015 Sign2Pay. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "AuthatureAccessTokenStorage.h"
 #import "NSArray+BlocksKit.h"
-
 
 @implementation AuthatureAccessTokenStorage {
 
@@ -20,13 +18,13 @@
 + (void) saveAccessToken:(NSDictionary*) accessToken forClientId:(NSString *) clientId withKey:(NSString *)key{
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:accessToken];
     NSString *path = [self getUserTokenPathForClientId:clientId andKey:key];
+
     NSError *error;
     [data writeToFile:path options:NSAtomicWrite | NSDataWritingFileProtectionComplete
                 error:&error];
 }
 
 + (NSString *) getUserTokenPathForClientId:(NSString *)clientId andKey:(NSString *)key{
-
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
     NSString *directory = [NSString stringWithFormat:@"%@/Authature/%@", [paths firstObject], clientId];
 
@@ -53,13 +51,13 @@
 }
 
 + (void) destroyAccessTokenForClientId:(NSString *)clientId andKey:(NSString *)key{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-    NSString *directory = [NSString stringWithFormat:@"%@/Authature/%@", [paths firstObject], clientId];
     NSString *tokenPath = [self getUserTokenPathForClientId:clientId andKey:key];
+
     if([[NSFileManager defaultManager] fileExistsAtPath:tokenPath]) {
         [[NSFileManager defaultManager] removeItemAtPath:tokenPath error:nil];
     }
 }
+
 +(NSDictionary *) tokenFromFile:(NSString *)path{
     NSData *data = [NSData dataWithContentsOfFile:path];
     return [NSKeyedUnarchiver unarchiveObjectWithData:data];

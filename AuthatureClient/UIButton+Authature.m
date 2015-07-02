@@ -7,19 +7,7 @@
 #import "AuthatureBankLogoTimer.h"
 #import "AFNetworking/UIButton+AFNetworking.h"
 
-static char COUNTRY_CODE_KEY;
-
 @implementation UIButton (Authature)
-
--(NSString *)countryCode{
-    return objc_getAssociatedObject(self, COUNTRY_CODE_KEY) ;
-}
-
--(void) setCountryCode:(NSString *)countryCode
-{
-    objc_setAssociatedObject(self, COUNTRY_CODE_KEY, countryCode, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
 -(void) useAuthatureBankLogos{
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(onBankLogoTimer)
@@ -39,14 +27,24 @@ static char COUNTRY_CODE_KEY;
     [self updateImage];
 }
 
-
 -(void) useAuthatureBankLogosWithToken:(NSDictionary *)accessToken{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     [self setImageWithURLString:accessToken[@"account"][@"bank"][@"logo"]];
 }
 
+-(NSString *)countryCode{
+    return objc_getAssociatedObject(self, @selector(countryCode)) ;
+}
+
+-(void) setCountryCode:(NSString *)countryCode
+{
+    objc_setAssociatedObject(self, @selector(countryCode), countryCode, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+
 - (void)dealloc{
+    objc_setAssociatedObject(self, @selector(countryCode), nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -67,6 +65,5 @@ static char COUNTRY_CODE_KEY;
     NSURL *url = [NSURL URLWithString:string];
     [self setBackgroundImageForState:UIControlStateNormal withURL:url];
 }
-
 
 @end

@@ -31,8 +31,8 @@ static NSString *BASE_BANKS_URL = @"http://api.sign2pay.com/api/v2/banks.json";
     if(self.currentBankLogoUrlIndex < self.bankLogoUrls.count){
         self.currentLogoUrl = [self.bankLogoUrls objectAtIndex:self.currentBankLogoUrlIndex];
     }
-
 }
+
 -(void) initImageUrlsWithCountryCode:(NSString *)countryCode {
     NSString *url = [NSString stringWithFormat:@"%@?country_code=%@", BASE_BANKS_URL, [countryCode uppercaseString]];
     [self loadImageUrlsFromUrl:url];
@@ -96,7 +96,6 @@ static NSString *BASE_BANKS_URL = @"http://api.sign2pay.com/api/v2/banks.json";
 
     return sharedTimer;
 }
-
 
 -(void) onTimer{
 

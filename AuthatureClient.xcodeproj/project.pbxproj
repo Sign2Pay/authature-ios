@@ -14,6 +14,8 @@
 		C8C1A179B16DED2297199630 /* AuthatureUserParams.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C1A1953EBCABBC4480AE74 /* AuthatureUserParams.m */; };
 		C8C1A8CADA99DC2DE52BC864 /* AuthatureClientSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C1A2E738F59D47AC818414 /* AuthatureClientSettings.m */; };
 		C8C1A8F0B58FE7DD489E16D3 /* AuthatureAccessTokenStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C1AC2BD4BAEBEF888E2468 /* AuthatureAccessTokenStorage.m */; };
+		C8C1AD47EB337468FDDF9150 /* UIButton+Authature.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C1A3F3854ABCD095D2C216 /* UIButton+Authature.m */; };
+		C8C1AE04D8D1DA566F354ADD /* AuthatureBankLogoTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C1A9981C2483CC422E9E6F /* AuthatureBankLogoTimer.m */; };
 		D04ECBD947D5DD5C2AD97017 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B05FBB821204D03B543A816E /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -41,11 +43,15 @@
 		C8C1A1953EBCABBC4480AE74 /* AuthatureUserParams.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthatureUserParams.m; sourceTree = "<group>"; };
 		C8C1A2E738F59D47AC818414 /* AuthatureClientSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthatureClientSettings.m; sourceTree = "<group>"; };
 		C8C1A2F61478ADA3A182A70C /* AuthatureDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthatureDelegate.h; sourceTree = "<group>"; };
+		C8C1A3F3854ABCD095D2C216 /* UIButton+Authature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Authature.m"; sourceTree = "<group>"; };
+		C8C1A3FF434182DCB781B907 /* UIButton+Authature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Authature.h"; sourceTree = "<group>"; };
 		C8C1A459836A52FE40A5AC54 /* UIImageView+Authature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Authature.m"; sourceTree = "<group>"; };
 		C8C1A504B497BF1A786CB7F8 /* AuthatureAccessTokenStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthatureAccessTokenStorage.h; sourceTree = "<group>"; };
 		C8C1A7D9C8E7EA3F6388F4E6 /* AuthatureClientSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthatureClientSettings.h; sourceTree = "<group>"; };
 		C8C1A9939D27B518A0296702 /* AuthatureUserParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthatureUserParams.h; sourceTree = "<group>"; };
+		C8C1A9981C2483CC422E9E6F /* AuthatureBankLogoTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthatureBankLogoTimer.m; sourceTree = "<group>"; };
 		C8C1AC2BD4BAEBEF888E2468 /* AuthatureAccessTokenStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthatureAccessTokenStorage.m; sourceTree = "<group>"; };
+		C8C1AE40A70C8B82C2B88C9A /* AuthatureBankLogoTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthatureBankLogoTimer.h; sourceTree = "<group>"; };
 		C8C1AEC503EFEA520F44D031 /* UIImageView+Authature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Authature.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,6 +101,10 @@
 				C8C1AC2BD4BAEBEF888E2468 /* AuthatureAccessTokenStorage.m */,
 				C8C1A459836A52FE40A5AC54 /* UIImageView+Authature.m */,
 				C8C1AEC503EFEA520F44D031 /* UIImageView+Authature.h */,
+				C8C1AE40A70C8B82C2B88C9A /* AuthatureBankLogoTimer.h */,
+				C8C1A9981C2483CC422E9E6F /* AuthatureBankLogoTimer.m */,
+				C8C1A3FF434182DCB781B907 /* UIButton+Authature.h */,
+				C8C1A3F3854ABCD095D2C216 /* UIButton+Authature.m */,
 			);
 			path = AuthatureClient;
 			sourceTree = "<group>";
@@ -212,6 +222,8 @@
 				C8C1A179B16DED2297199630 /* AuthatureUserParams.m in Sources */,
 				C8C1A8F0B58FE7DD489E16D3 /* AuthatureAccessTokenStorage.m in Sources */,
 				C8C1A12681ED09FF8CABDE74 /* UIImageView+Authature.m in Sources */,
+				C8C1AE04D8D1DA566F354ADD /* AuthatureBankLogoTimer.m in Sources */,
+				C8C1AD47EB337468FDDF9150 /* UIButton+Authature.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
