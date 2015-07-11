@@ -35,4 +35,9 @@
 * This method has to be implemented if the client presented the webView with presentAuthatureWebView:completion:
 */
 - (void) dismissAuthatureWebView;
+
+/**
+* This method gets called immediately after the webview was dismissed.
+*/
+- (void) authatureWebViewGotDismissed;
 @end

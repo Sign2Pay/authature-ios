@@ -213,19 +213,26 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager.requestSerializer setValue:@"Authature iOS SDK v0.0.1" forHTTPHeaderField:@"User-Agent"];
 
+    [self dismissWebView];
+
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
         if(responseObject[@"error"]){
             [self processAuthatureErrorCode:responseObject[@"error"]
                             withDescription:responseObject[@"error_description"]];
-            [self dismissWebView];
         }else{
             [self processAccessToken:responseObject[@"access_token"]];
-            [self dismissWebView];
         }
-
+        [self releaseCallbacks];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self processCallbackError:error];
+        [self releaseCallbacks];
+
     }];
+}
+
+- (void)releaseCallbacks {
+    self.currentActionCallback = nil;
+    self.currentActionErrorCallback = nil;
 }
 
 - (void)processAccessToken:(NSDictionary* )accessToken {
@@ -283,6 +290,9 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
     self.webView = NULL;
     self.webViewController = NULL;
 
+    if([self.delegate respondsToSelector:@selector(authatureWebViewGotDismissed)]){
+        [self.delegate authatureWebViewGotDismissed];
+    }
 }
 
 #pragma mark UIWebViewDelegate
