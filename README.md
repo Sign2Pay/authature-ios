@@ -57,6 +57,17 @@ Use this approach for instance if you want to animate the transition.
 - (void) dismissAuthatureWebView;
 ```
 
+The Webview will be dismissed before the token is fetched through your callback url. You may want to present some sort of indicator to your user while this is happening.
+AuthatureClient will call authatureWebViewGotDismissed right after the webview got dismissed.
+```objective-c
+- (void) authatureWebViewGotDismissed{
+    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self.hud setLabelText:@"Fetching token"];
+}
+```
+
+In the callbacks (see below) you can hide the hud again.
+
 ### Starting an Authature flow
 
 Depending on your setup Authature supports different scopes.
