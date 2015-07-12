@@ -23,11 +23,8 @@ More info on the delegate below.
 
 ```objective-c
 self.client = [[AuthatureClient alloc] initWithSettings:clientSettings
-                                             userParams:(AuthatureUserParams *) userParams
                                                delegate:authatureDelegate];
 ```
-
-The userParams object holds properties for email, firstName and lastName information and will be used as parameters in the Authature flow.
 
 ## The delegate
 
@@ -72,45 +69,58 @@ In the callbacks (see below) you can hide the hud again.
 
 Depending on your setup Authature supports different scopes.
 You can start the flow for any of these scopes by calling the corresponding method.
-
+The userParams object holds properties for email, firstName and lastName information and will be used as parameters in the Authature flow.
 All these methods have 2 blocks as parameters, a successCallback and an errorCallback.
 
 (note, since these blocks will be called in an async fashion, its is best to keep a strong reference to the client object)
 
 Start a flow for the capture scope (to capture the signature)
 ```objective-c
-[client startAuthatureFlowForSignatureCaptureWithSuccess:^(NSDictionary *dictionary) {
-        //ok
-    } andFailure:^(NSString *code, NSString *description) {
-        //fail
-    }];
+[client startAuthatureFlowForSignatureCaptureWithUserParams:userParams
+                                                    success:^(NSDictionary *accessToken) {
+                                                            //ok
+                                                    } 
+                                                  andFailure:^(NSString *code, NSString *description) {
+                                                            //fail
+                                                  }
+];
 ```
 
 Authenticate scope (to authenticate the user)
 ```objective-c
-[client startAuthatureFlowForAuthenticationWithSuccess:^(NSDictionary *dictionary) {
-        //ok
-    } andFailure:^(NSString *code, NSString *description) {
-        /fail
-    }];
+[client startAuthatureFlowForAuthenticationWithUserParams:userParams
+                                                  success:^(NSDictionary *accessToken) {
+                                                            //ok
+                                                  } 
+                                                andFailure:^(NSString *code, NSString *description) {
+                                                            //fail
+                                                }
+];
 ```
 
 PreApprove scope (to preapprove payments)
 ```objective-c
-[client startAuthatureFlowForPreapprovalWithSuccess:^(NSDictionary *dictionary) {
-        //ok
-    } andFailure:^(NSString *code, NSString *description) {
-        //fail
-    }];
+[client startAuthatureFlowForPreapprovalWithUserParams:userParams
+                                              success:^(NSDictionary *accessToken) {
+                                                            //ok
+                                              } 
+                                            andFailure:^(NSString *code, NSString *description) {
+                                                            //fail
+                                            }
+];
 ```
 
 If you want a combination of scopes you can call the more generic method:
 ```objective-c
-[client startAuthatureFlowForScope:@"authanticate,preapproveSuccess" withSuccess:^(NSDictionary *dictionary) {
-      //ok
-    } andFailure:^(NSString *code, NSString *description) {
-      //fail
-    }];
+[client startAuthatureFlowForScope:@"authanticate,preapproveSuccess"
+                    withUserParams:userParams
+                          success:^(NSDictionary *accessToken) {
+                                  //ok
+                          } 
+                       andFailure:^(NSString *code, NSString *description) {
+                                  //fail
+                       }
+];
 ```
 
 ##Token storage
