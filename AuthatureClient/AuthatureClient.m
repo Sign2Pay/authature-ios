@@ -14,8 +14,6 @@ NSString *const AUTHATURE_SCOPE_PRE_APPROVAL = @"preapproval";
 NSString *const AUTHATURE_SCOPE_AUTHENTICATE = @"authenticate";
 NSString *const AUTHATURE_SCOPE_SIGNATURE_CAPTURE = @"capture";
 
-//https://app.sign2pay.com/oauth/authorize?authature_site=app.sign2pay.com&client_id=c509fd593742b6b08adf4f0b41a4801c&response_type=code&redirect_uri=http%3A%2F%2Fauthature.com%2Foauth%2Fcallback&state=a7960190e546361df673d4a40d2d5e97c85b11e719481e2da3b19dcf47282154&device_uid=0c9468e589955074a457cca400c14fa3a6bbe077f39a5584dc3902e187b7f9fd&scope=preapproval&user_params%5Bidentifier%5D=mark.meeus%40gmail.com&user_params%5Bfirst_name%5D=Mark&user_params%5Blast_name%5D=Meeus
-//NSString * AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?authature_site=app.sign2pay.com&client_id=c509fd593742b6b08adf4f0b41a4801c&response_type=code&redirect_uri=http%3A%2F%2Fauthature.com%2Foauth%2Fcallback&state=a7960190e546361df673d4a40d2d5e97c85b11e719481e2da3b19dcf47282154&device_uid=0c9468e589955074a457cca400c14fa3a6bbe077f39a5584dc3902e187b7f9fd&scope=preapproval&user_params%5Bidentifier%5D=mark.meeus%40gmail.com&user_params%5Bfirst_name%5D=Mark&user_params%5Blast_name%5D=Meeus";
 NSString *AUTHATURE_URL = @"https://app.sign2pay.com/oauth/authorize?"
                             "?authature_site=app.sign2pay.com"
                             "&response_type=code"
@@ -299,8 +297,6 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
 
     NSString *url = [request.mainDocumentURL absoluteString];
-    NSLog(@"shouldStartLoadWithRequest");
-    NSLog(url, nil);
 
     if([url hasPrefix:self.settings.callbackUrl]){
         NSString *state = [self getStateFromUrl:url];
@@ -312,17 +308,16 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
     return YES;
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView{
-
-    NSLog(@"Did start loading");
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView{
-    NSLog(@"Did finish loading");
-}
+//- (void)webViewDidStartLoad:(UIWebView *)webView{
+//}
+//
+//- (void)webViewDidFinishLoad:(UIWebView *)webView{
+//}
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
-    NSLog(@"ERROR LOADING PAGE");
+    [self dismissWebView];
+    self.currentActionErrorCallback(@"WebViewError", [error description]);
+    [self releaseCallbacks];
 }
 
 @end
