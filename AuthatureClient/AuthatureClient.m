@@ -315,6 +315,15 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
 //}
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
+    if(error.userInfo )
+    {
+        NSString *urlString = error.userInfo[@"NSErrorFailingURLStringKey"];
+        if([urlString hasPrefix:self.settings.callbackUrl]){
+            //expected since we aren't loading this in the UIWebView
+            return;
+        }
+    }
+
     [self dismissWebView];
     self.currentActionErrorCallback(@"WebViewError", [error description]);
     [self releaseCallbacks];
