@@ -11,13 +11,13 @@ Drag and drop authature-ios directory into your project.
 
 First create an instance of AuthatureClientSettings to hold your client details:
 ```objective-c
-AuthatureClientSettings *clientSettings = 
+AuthatureClientSettings *clientSettings =
   [[AuthatureClientSettings alloc] initWithClientId:@"your-client-id"
                                         callbackUrl:@"your-servers-oauth-callback-url"];
 ```
 
-With this settings object, you can instantiate an AuthatureClient. 
-AuthatureClient uses a UIWebView to load the OAuth2 pages. 
+With this settings object, you can instantiate an AuthatureClient.
+AuthatureClient uses a UIWebView to load the OAuth2 pages.
 The delegate gives you control over where this webview ends up in your view hiërarchy.
 More info on the delegate below.
 
@@ -32,14 +32,14 @@ The AuthatureClient uses a UIWebView to go through Authature's OAuth2 flow.
 When the AuthatureClient is instantiated, you need to pass it an object which implements the AuthatureDelegate protocol.
 Your delegate will be used to either obtain a controller to present the UIWebView, or the UIWebView will be passed to the delegate to present and dismiss.
 
-In the first scenarion, simple implement this and return your controller. 
+In the first scenarion, simply implement this and return your controller.
 ```objective-c
-- (UIViewController *) controllerForAuthatureWebView;
+- (UIViewController *)controllerForAuthatureWebView;
 ```
 
 If you implement the protocol on your controller, it can be as simple as:
 ```objective-c
-- (UIViewController *) controllerForAuthatureWebView{
+- (UIViewController *)controllerForAuthatureWebView{
   return self;
 }
 ```
@@ -48,14 +48,17 @@ For the second scenario, you can control how the webview is presented and dismis
 Use this approach for instance if you want to animate the transition.
 
 ```objective-c
-- (void) presentAuthatureWebView:(UIWebView *) webView
-                      completion:(void (^ (void))completion;
+- (void)presentAuthatureWebView:(UIWebView *) webView
+                     completion:(void (^ (void))completion;
 
-- (void) dismissAuthatureWebView;
+- (void)dismissAuthatureWebView;
 ```
 
 The Webview will be dismissed before the token is fetched through your callback url. You may want to present some sort of indicator to your user while this is happening.
 AuthatureClient will call authatureWebViewGotDismissed right after the webview got dismissed.
+
+
+For instance:
 ```objective-c
 - (void) authatureWebViewGotDismissed{
     self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -69,7 +72,8 @@ In the callbacks (see below) you can hide the hud again.
 
 Depending on your setup Authature supports different scopes.
 You can start the flow for any of these scopes by calling the corresponding method.
-The userParams object holds properties for email, firstName and lastName information and will be used as parameters in the Authature flow.
+The userParams object holds properties for email, firstName and lastName.
+These values will be used as parameters in the Authature flow.
 All these methods have 2 blocks as parameters, a successCallback and an errorCallback.
 
 (note, since these blocks will be called in an async fashion, its is best to keep a strong reference to the client object)
@@ -79,7 +83,7 @@ Start a flow for the capture scope (to capture the signature)
 [client startAuthatureFlowForSignatureCaptureWithUserParams:userParams
                                                     success:^(NSDictionary *accessToken) {
                                                             //ok
-                                                    } 
+                                                    }
                                                   andFailure:^(NSString *code, NSString *description) {
                                                             //fail
                                                   }
@@ -91,7 +95,7 @@ Authenticate scope (to authenticate the user)
 [client startAuthatureFlowForAuthenticationWithUserParams:userParams
                                                   success:^(NSDictionary *accessToken) {
                                                             //ok
-                                                  } 
+                                                  }
                                                 andFailure:^(NSString *code, NSString *description) {
                                                             //fail
                                                 }
@@ -103,7 +107,7 @@ PreApprove scope (to preapprove payments)
 [client startAuthatureFlowForPreapprovalWithUserParams:userParams
                                               success:^(NSDictionary *accessToken) {
                                                             //ok
-                                              } 
+                                              }
                                             andFailure:^(NSString *code, NSString *description) {
                                                             //fail
                                             }
@@ -112,11 +116,11 @@ PreApprove scope (to preapprove payments)
 
 If you want a combination of scopes you can call the more generic method:
 ```objective-c
-[client startAuthatureFlowForScope:@"authanticate,preapproveSuccess"
+[client startAuthatureFlowForScope:@"authenticate,preapprove"
                     withUserParams:userParams
                           success:^(NSDictionary *accessToken) {
                                   //ok
-                          } 
+                          }
                        andFailure:^(NSString *code, NSString *description) {
                                   //fail
                        }
@@ -124,7 +128,7 @@ If you want a combination of scopes you can call the more generic method:
 ```
 
 ##Token storage
-The AuthatureClient can be configured to automatically store a token per requested scope (off by default).
+The AuthatureClient can be configured to automatically store a token per requested scope (disabled by default).
 If you turn on this feature, the AuthatureClient will use this token to send user params into the Authature flow if a new token is requested. This way, your users don't have to re-enter their details (e-mail) when going through the flow.
 
 Turn it on like this:
@@ -153,11 +157,11 @@ Store a token like this:
 [AuthatureAccessTokenStorage saveAccessToken:accessToken
                                  forClientId:clientId
                                      withKey:accessToken[@"token"];
-```                       
+```
 
 Reading a token:
 ```objective-c
-return [AuthatureAccessTokenStorage getAccessTokenForClientId:clientId 
+return [AuthatureAccessTokenStorage getAccessTokenForClientId:clientId
                                                        andKey:"123"];
 ````
 
