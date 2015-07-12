@@ -44,12 +44,10 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
 @implementation AuthatureClient
 
 - (instancetype)initWithSettings:(AuthatureClientSettings *)settings
-                      userParams:(AuthatureUserParams *) userParams
                      andDelegate:(id<AuthatureDelegate>) delegate{
     self = [super init];
     if (self) {
         self.settings = settings;
-        self.userParams = userParams;
         self.deviceUid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
         self.delegate = delegate;
     }
@@ -57,29 +55,36 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
     return self;
 }
 
-- (void) startAuthatureFlowForSignatureCaptureWithSuccess:(void(^)(NSDictionary *))successCallback
-                                               andFailure:(void(^)(NSString *, NSString *))errorCallback;{
+- (void) startAuthatureFlowForSignatureCaptureWithUserParams:(AuthatureUserParams *) userParams
+                                                     success:(void(^)(NSDictionary *))successCallback
+                                                  andFailure:(void(^)(NSString *, NSString *))errorCallback;{
     [self startAuthatureFlowForScope:AUTHATURE_SCOPE_SIGNATURE_CAPTURE
-                         withSuccess:successCallback
+            withUserParams:userParams
+                         success:successCallback
                           andFailure:errorCallback];
 }
 
-- (void) startAuthatureFlowForAuthenticationWithSuccess:(void(^)(NSDictionary *))successCallback
-                                             andFailure:(void(^)(NSString *, NSString *))errorCallback;{
+- (void) startAuthatureFlowForAuthenticationWithUserParams:(AuthatureUserParams *) userParams
+                                                   success:(void(^)(NSDictionary *))successCallback
+                                                andFailure:(void(^)(NSString *, NSString *))errorCallback;{
     [self startAuthatureFlowForScope:AUTHATURE_SCOPE_AUTHENTICATE
-                         withSuccess:successCallback
+            withUserParams:userParams
+                         success:successCallback
                           andFailure:errorCallback];
 }
 
-- (void) startAuthatureFlowForPreapprovalWithSuccess:(void(^)(NSDictionary *))successCallback
-                                          andFailure:(void(^)(NSString *, NSString *))errorCallback;{
+- (void) startAuthatureFlowForPreapprovalWithUserParams:(AuthatureUserParams *) userParams
+                                                success:(void(^)(NSDictionary *))successCallback
+                                             andFailure:(void(^)(NSString *, NSString *))errorCallback;{
     [self startAuthatureFlowForScope:AUTHATURE_SCOPE_PRE_APPROVAL
-                         withSuccess:successCallback
+                        withUserParams:userParams
+                         success:successCallback
                           andFailure:errorCallback];
 }
 
 - (void) startAuthatureFlowForScope:(NSString *)scope
-                        withSuccess:(void(^)(NSDictionary *))successCallback
+                        withUserParams:(AuthatureUserParams *) userParams
+                        success:(void(^)(NSDictionary *))successCallback
                          andFailure:(void(^)(NSString *, NSString *))errorCallback;{
 
     self.currentActionCallback = successCallback;
@@ -87,7 +92,7 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
 
     [self SetState];
 
-    [self presentWebViewForScope:scope];
+    [self presentWebViewForScope:scope andUserParams:userParams];
 }
 
 - (void)verifyStoredTokenValidityforScope:(NSString *)scope
@@ -164,15 +169,16 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
     return [parameter stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
 }
 
--(NSURL *) buildAuthorizationRequestURL:(NSString *)scope{
+-(NSURL *) buildAuthorizationRequestURLForScope:(NSString *)scope
+                                  andUserParams:(AuthatureUserParams *) userParams{
     NSString * userIdentifier = @"";
     NSString * userFirstName = @"";
     NSString * userLastName = @"";
 
-    if(self.userParams != NULL){
-        userIdentifier = self.userParams.identifier;
-        userFirstName = self.userParams.firstName;
-        userLastName = self.userParams.lastName;
+    if(userParams != NULL){
+        userIdentifier = userParams.identifier;
+        userFirstName = userParams.firstName;
+        userLastName = userParams.lastName;
     }else if(self.automaticTokenStorageEnabled){
         NSDictionary *accessToken = [self getStoredTokenForScope:scope];
         if(accessToken != NULL){
@@ -195,8 +201,13 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
     return [NSURL URLWithString:urlString];
 }
 
--(void) loadGrantPageWithScope:(NSString *)scope{
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: [self buildAuthorizationRequestURL:scope]];
+-(void) loadGrantPageWithScope:(NSString *)scope
+                 andUserParams:(AuthatureUserParams *)userParams{
+
+    NSURL *url = [self buildAuthorizationRequestURLForScope:scope
+                                              andUserParams:userParams];
+
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: url];
     [self.webView loadRequest:request];
 }
 
@@ -254,10 +265,11 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
 }
 
 #pragma mark webViewManagement
-- (void)presentWebViewForScope:(NSString *)scope{
+- (void)presentWebViewForScope:(NSString *)scope
+                 andUserParams:(AuthatureUserParams *)userParams{
 
     void(^onWebViewPresented)(void) = ^void() {
-        [self loadGrantPageWithScope:scope];
+        [self loadGrantPageWithScope:scope andUserParams:userParams];
     };
 
     self.webView = [[UIWebView alloc] initWithFrame:[UIScreen mainScreen].bounds];

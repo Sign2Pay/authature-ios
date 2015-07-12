@@ -30,11 +30,6 @@ FOUNDATION_EXPORT NSString *const AUTHATURE_SCOPE_SIGNATURE_CAPTURE;
 * See AuthatureClientSettings.h
 */
 @property (strong, nonatomic) AuthatureClientSettings *settings;
-/**
-* The current user parameters
-* See AuthatureUserParams.h
-*/
-@property (strong, nonatomic) AuthatureUserParams *userParams;
 
 /**
 * The current deviceUid.
@@ -54,31 +49,35 @@ FOUNDATION_EXPORT NSString *const AUTHATURE_SCOPE_SIGNATURE_CAPTURE;
 @property (nonatomic) BOOL automaticTokenStorageEnabled;
 
 - (instancetype)initWithSettings:(AuthatureClientSettings *)settings
-                   userParams:(AuthatureUserParams *) userParams
                   andDelegate:(NSObject<AuthatureDelegate>*) delegate;
 
 /**
 * Starts the Authature Flow to get a token for the preapproval scope
 */
-- (void)startAuthatureFlowForPreapprovalWithSuccess:(void(^)(NSDictionary *))successCallback
-                                         andFailure:(void(^)(NSString *, NSString *))errorCallback;
+- (void)startAuthatureFlowForPreapprovalWithUserParams:(AuthatureUserParams *) userParams
+                                               success:(void(^)(NSDictionary *))successCallback
+                                            andFailure:(void(^)(NSString *, NSString *))errorCallback;
 
 /**
 * Starts the Authature Flow to get a token for the authenticate scope
 */
-- (void)startAuthatureFlowForAuthenticationWithSuccess:(void(^)(NSDictionary *))successCallback
-                                            andFailure:(void(^)(NSString *, NSString *))errorCallback;
+- (void)startAuthatureFlowForAuthenticationWithUserParams:(AuthatureUserParams *) userParams
+                                                  success:(void(^)(NSDictionary *))successCallback
+                                               andFailure:(void(^)(NSString *, NSString *))errorCallback;
 
 /**
 * Starts the Authature Flow to get a token for the capture scope
 */
-- (void)startAuthatureFlowForSignatureCaptureWithSuccess:(void(^)(NSDictionary *))successCallback
-                                              andFailure:(void(^)(NSString *, NSString *))errorCallback;
+- (void)startAuthatureFlowForSignatureCaptureWithUserParams:(AuthatureUserParams *) userParams
+                                                    success:(void(^)(NSDictionary *))successCallback
+                                                 andFailure:(void(^)(NSString *, NSString *))errorCallback;
 
 /**
 * Starts the Authature Flow to get a token for a custom scopes
 */
-- (void)startAuthatureFlowForScope:(NSString *)scope withSuccess:(void(^)(NSDictionary *))successCallback
+- (void)startAuthatureFlowForScope:(NSString *)scope
+                    withUserParams:(AuthatureUserParams *) userParams
+                           success:(void(^)(NSDictionary *))successCallback
                         andFailure:(void(^)(NSString *, NSString *))errorCallback;;
 
 /**
