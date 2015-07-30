@@ -66,6 +66,19 @@ For instance:
 }
 ```
 
+The webView will only be presented when the first page is completely loaded. It is probably best to show some sort if indicator that authature is loading. You can do this by implementing authatureWebViewLoadStarted and authatureWebViewReady;
+
+```objective-c
+-(void)authatureWebViewLoadStarted{
+    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+}
+
+- (void)authatureWebViewReady{
+    [self.hud hide:YES];
+}
+```
+
+
 In the callbacks (see below) you can hide the hud again.
 
 ### Starting an Authature flow
