@@ -65,6 +65,9 @@ For instance:
     [self.hud setLabelText:@"Fetching token"];
 }
 ```
+In the callbacks (see below) you can hide the hud again.
+
+
 
 The webView will only be presented when the first page is completely loaded. It is probably best to show some sort if indicator that authature is loading. You can do this by implementing authatureWebViewLoadStarted and authatureWebViewReady;
 
@@ -77,9 +80,6 @@ The webView will only be presented when the first page is completely loaded. It 
     [self.hud hide:YES];
 }
 ```
-
-
-In the callbacks (see below) you can hide the hud again.
 
 ### Starting an Authature flow
 
