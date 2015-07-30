@@ -37,6 +37,19 @@
 - (void) dismissAuthatureWebView;
 
 /**
+* This method get's called when the first page in webview will get loaded.
+* Implementers can use this method to display some sort of progress indicator.
+* The webView will not be visible untill this page is loaded, see authatureWebViewReady
+*/
+- (void) authatureWebViewLoadStarted;
+
+/*
+* This method get's called when the first page in the webView was loaded and the webView will become visible.
+* Use this method together with authatureWebViewLoadStarted to show/hide some sort of progress indicator.
+*/
+- (void) authatureWebViewReady;
+
+/**
 * This method gets called immediately after the webview was dismissed.
 */
 - (void) authatureWebViewGotDismissed;

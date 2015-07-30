@@ -267,27 +267,15 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
 #pragma mark webViewManagement
 - (void)presentWebViewForScope:(NSString *)scope
                  andUserParams:(AuthatureUserParams *)userParams{
-
-    void(^onWebViewPresented)(void) = ^void() {
-        [self loadGrantPageWithScope:scope andUserParams:userParams];
-    };
-
+    
     self.webView = [[UIWebView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.webView.delegate = self;
-
-    if([self.delegate respondsToSelector:@selector(presentAuthatureWebView:completion:)]){
-        [self.delegate presentAuthatureWebView:self.webView
-                                    completion:onWebViewPresented];
-    }else{
-        UIViewController* hostController = [self.delegate controllerForAuthatureWebView];
-
-        self.webViewController =  [[UIViewController alloc] init];
-        self.webViewController.view = self.webView;
-
-        [hostController presentViewController:self.webViewController
-                                     animated:NO
-                                   completion:onWebViewPresented];
+    
+    if([self.delegate respondsToSelector:@selector(authatureWebViewLoadStarted)]){
+        [self.delegate authatureWebViewLoadStarted];
     }
+    [self loadGrantPageWithScope:scope andUserParams:userParams];
+    
 }
 
 - (void) dismissWebView{
@@ -323,8 +311,26 @@ NSString *VERIFY_TOKEN_URL = @"https://app.sign2pay.com/oauth/token?"
 //- (void)webViewDidStartLoad:(UIWebView *)webView{
 //}
 //
-//- (void)webViewDidFinishLoad:(UIWebView *)webView{
-//}
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
+
+    if([self.delegate respondsToSelector:@selector(authatureWebViewReady)]){
+        [self.delegate authatureWebViewReady];
+    }
+
+    if([self.delegate respondsToSelector:@selector(presentAuthatureWebView:completion:)]){
+        [self.delegate presentAuthatureWebView:self.webView
+                                    completion:nil];
+    }else{
+        UIViewController* hostController = [self.delegate controllerForAuthatureWebView];
+        
+        self.webViewController =  [[UIViewController alloc] init];
+        self.webViewController.view = self.webView;
+        
+        [hostController presentViewController:self.webViewController
+                                     animated:NO
+                                   completion:nil];
+    }
+}
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
     if(error.userInfo )
